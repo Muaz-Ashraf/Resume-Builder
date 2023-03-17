@@ -10,7 +10,9 @@ const InputForm = () => {
   const [phone, setPhone] = useState("");
   const [location, setLocation] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
-  const [education, setEducation] = useState("");
+  const [degree, setDegree] = useState("");
+  const [university, setUniversity] = useState("");
+  const [yearCompleted, setYearCompleted] = useState("");
   const [experience, setExperience] = useState("");
   const [skills, setSkills] = useState("");
   const [interests, setInterests] = useState("");
@@ -26,7 +28,9 @@ const InputForm = () => {
       phone,
       location,
       linkedIn,
-      education,
+      degree,
+      university,
+      yearCompleted,
       experience,
       skills,
       interests,
@@ -48,17 +52,23 @@ const InputForm = () => {
       <Card
         variant="outlined"
         sx={{
-          padding: 5,
+          padding: 7,
           display: "flex",
           flexDirection: "column",
 
           backgroundColor: "white",
 
           borderRadius: "2em",
+          margin: 2,
         }}
       >
-        <Grid container spacing={2} component="form">
-          <Grid item xs={12} sm={6}>
+        <Grid container spacing={3} component="form">
+          <Grid item xs={12} sm={6} style={{ order: 1 }}>
+            <Typography variant="h6" fontWeight="bold">
+              Personal Information
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ order: 2 }}>
             <TextField
               value={name}
               variant="outlined"
@@ -70,7 +80,7 @@ const InputForm = () => {
               onChange={(e) => setName(e.target.value)}
             ></TextField>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} style={{ order: 3 }}>
             <TextField
               id="title"
               value={title}
@@ -83,7 +93,7 @@ const InputForm = () => {
               onChange={(e) => setTitle(e.target.value)}
             ></TextField>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} style={{ order: 4 }}>
             <TextField
               id="description"
               value={description}
@@ -97,7 +107,7 @@ const InputForm = () => {
             ></TextField>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} style={{ order: 5 }}>
             <TextField
               id="email"
               value={email}
@@ -110,7 +120,7 @@ const InputForm = () => {
             ></TextField>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} style={{ order: 6 }}>
             <TextField
               variant="outlined"
               value={phone}
@@ -122,7 +132,7 @@ const InputForm = () => {
             ></TextField>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} style={{ order: 7 }}>
             <TextField
               variant="outlined"
               label="Location"
@@ -134,7 +144,7 @@ const InputForm = () => {
             ></TextField>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} style={{ order: 8 }}>
             <TextField
               variant="outlined"
               label="LinkedIn"
@@ -145,20 +155,50 @@ const InputForm = () => {
               onChange={(e) => setLinkedIn(e.target.value)}
             ></TextField>
           </Grid>
-
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} style={{ order: 9 }}>
+            <Typography variant="h6" fontWeight="bold">
+              Education
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ order: 10 }}>
             <TextField
               variant="outlined"
-              value={education}
-              label="Education"
+              value={degree}
+              label="Degree"
               type="text"
               fullWidth
               required
-              onChange={(e) => setEducation(e.target.value)}
+              onChange={(e) => setDegree(e.target.value)}
             ></TextField>
           </Grid>
-
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} style={{ order: 11 }}>
+            <TextField
+              variant="outlined"
+              value={university}
+              label="University"
+              type="text"
+              fullWidth
+              required
+              onChange={(e) => setUniversity(e.target.value)}
+            ></TextField>
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ order: 12 }}>
+            <TextField
+              variant="outlined"
+              value={yearCompleted}
+              label="Year of Completion"
+              type="text"
+              fullWidth
+              required
+              onChange={(e) => setYearCompleted(e.target.value)}
+            ></TextField>
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ order: 13 }}>
+            <Typography variant="h6" fontWeight="bold">
+              Professional Experience
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ order: 14 }}>
             <TextField
               value={experience}
               variant="outlined"
@@ -169,7 +209,7 @@ const InputForm = () => {
               onChange={(e) => setExperience(e.target.value)}
             ></TextField>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} style={{ order: 15 }}>
             <TextField
               value={skills}
               variant="outlined"
@@ -180,7 +220,7 @@ const InputForm = () => {
               onChange={(e) => setSkills(e.target.value)}
             ></TextField>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} style={{ order: 16 }}>
             <TextField
               value={interests}
               variant="outlined"
@@ -206,7 +246,7 @@ const InputForm = () => {
           }}
           onClick={submitHandler}
         >
-          <Typography variant="h5" fontWeight="bold">
+          <Typography variant="h6" fontWeight="bold">
             Generate your CV
           </Typography>
         </Button>
