@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, Card, Grid, TextField, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const InputForm = () => {
   const [name, setName] = useState("");
@@ -15,9 +15,9 @@ const InputForm = () => {
   const [skills, setSkills] = useState("");
   const [interests, setInterests] = useState("");
   const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
 
   const submitHandler = (e) => {
-    e.preventDefault();
     const formData = {
       name,
       title,
@@ -32,6 +32,7 @@ const InputForm = () => {
       interests,
     };
     setFormData(formData);
+    navigate("./resume", { state: formData });
   };
   return (
     <>
@@ -56,7 +57,7 @@ const InputForm = () => {
           borderRadius: "2em",
         }}
       >
-        <Grid container spacing={2}>
+        <Grid container spacing={2} component="form">
           <Grid item xs={12} sm={6}>
             <TextField
               value={name}
@@ -194,25 +195,21 @@ const InputForm = () => {
       </Card>
 
       <Box textAlign="center">
-        <Link
-          to="/resume"
-          style={{ textDecoration: "none" }}
-          state={{ formData: formData }}
-        >
-          <Button
-            variant="contained"
-            color="success"
-            sx={{
-              padding: 3,
+        <Button
+          variant="contained"
+          color="success"
+          sx={{
+            padding: 3,
 
-              margin: 3,
-              borderRadius: "3em",
-            }}
-            onClick={submitHandler}
-          >
-            <Typography variant="h5">Generate your CV</Typography>
-          </Button>
-        </Link>
+            margin: 3,
+            borderRadius: "3em",
+          }}
+          onClick={submitHandler}
+        >
+          <Typography variant="h5" fontWeight="bold">
+            Generate your CV
+          </Typography>
+        </Button>
       </Box>
     </>
   );
