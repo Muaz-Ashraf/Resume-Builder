@@ -1,10 +1,17 @@
 import "./App.css";
 import InputForm from "./Components/InputForm";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Resume from "./Components/Resume";
 
 function App() {
   return (
     <>
-      <InputForm />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<InputForm />} />
+          <Route path="/resume" element={<Resume />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

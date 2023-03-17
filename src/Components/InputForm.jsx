@@ -14,6 +14,7 @@ const InputForm = () => {
   const [experience, setExperience] = useState("");
   const [skills, setSkills] = useState("");
   const [interests, setInterests] = useState("");
+  const [formData, setFormData] = useState({});
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -30,6 +31,7 @@ const InputForm = () => {
       skills,
       interests,
     };
+    setFormData(formData);
   };
   return (
     <>
@@ -190,20 +192,27 @@ const InputForm = () => {
           </Grid>
         </Grid>
       </Card>
-      <Box textAlign="center">
-        <Button
-          variant="contained"
-          color="success"
-          sx={{
-            padding: 3,
 
-            margin: 3,
-            borderRadius: "3em",
-          }}
-          onClick={submitHandler}
+      <Box textAlign="center">
+        <Link
+          to="/resume"
+          style={{ textDecoration: "none" }}
+          state={{ formData: formData }}
         >
-          Generate your CV
-        </Button>
+          <Button
+            variant="contained"
+            color="success"
+            sx={{
+              padding: 3,
+
+              margin: 3,
+              borderRadius: "3em",
+            }}
+            onClick={submitHandler}
+          >
+            <Typography variant="h5">Generate your CV</Typography>
+          </Button>
+        </Link>
       </Box>
     </>
   );
