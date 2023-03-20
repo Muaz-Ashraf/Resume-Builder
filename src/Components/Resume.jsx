@@ -6,13 +6,14 @@ import EmailIcon from "@mui/icons-material/Email";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import CustomCard from "./UI/CustomCard";
 
 const Resume = () => {
   const location = useLocation();
   const formData = location.state;
   return (
     <>
-      <Box mt={5}>
+      <CustomCard>
         <Stack
           direction="row"
           divider={<Divider orientation="vertical" flexItem />}
@@ -95,32 +96,50 @@ const Resume = () => {
             <Typography variant="h6">{formData.linkedIn}</Typography>
           </Stack>
         </Stack>
+        <Grid container spacing={1}>
+          <Grid item xs={6}>
+            <Stack mt={3}>
+              <Typography variant="h4" fontWeight="bold" mb={3}>
+                EDUCATION
+              </Typography>
+              <Typography variant="h6" fontWeight="bold">
+                {formData.degree}
+              </Typography>
+              <Typography variant="h6">{formData.university}</Typography>
+              <Typography variant="body1">
+                {formData.yearEnrolled} - {formData.yearCompleted}
+              </Typography>
+            </Stack>
+            <Stack mt={10}>
+              <Typography variant="h4" fontWeight="bold" mb={3}>
+                WORK EXPERIENCE
+              </Typography>
+              <Typography variant="h6" fontWeight="bold">
+                {formData.role}
+              </Typography>
+              <Typography variant="h6">{formData.company}</Typography>
+              <Typography variant="h6">
+                {formData.yearsCompany} years
+              </Typography>
+            </Stack>
+          </Grid>
 
-        <Stack mt={3} ml={4}>
-          <Typography variant="h4" fontWeight="bold" mb={3}>
-            EDUCATION
-          </Typography>
-          <Typography variant="h6" fontWeight="bold">
-            {formData.degree}
-          </Typography>
-          <Typography variant="h6">{formData.university}</Typography>
-          <Typography variant="body1">
-            {formData.yearEnrolled} - {formData.yearCompleted}
-          </Typography>
-        </Stack>
-        <Stack mt={10} ml={4}>
-          <Typography variant="h4" fontWeight="bold" mb={3}>
-            WORK EXPERIENCE
-          </Typography>
-          <Typography variant="h6" fontWeight="bold">
-            {formData.role}
-          </Typography>
-          <Typography variant="h6">{formData.company}</Typography>
-          <Typography variant="h6">{formData.yearsCompany} years</Typography>
-        </Stack>
-        <Typography variant="h1">{formData.skills}</Typography>
-        <Typography variant="h1">{formData.interests}</Typography>
-      </Box>
+          <Grid item xs={6}>
+            <Stack mt={3}>
+              <Typography variant="h4" fontWeight="bold" mb={3}>
+                SKILLS
+              </Typography>
+              <Typography variant="h1">{formData.skills}</Typography>
+            </Stack>
+            <Stack mt={10}>
+              <Typography variant="h4" fontWeight="bold" mb={3}>
+                INTERESTS
+              </Typography>
+              <Typography variant="h1">{formData.interests}</Typography>
+            </Stack>
+          </Grid>
+        </Grid>
+      </CustomCard>
     </>
   );
 };

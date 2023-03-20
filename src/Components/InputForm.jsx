@@ -11,6 +11,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import CustomCard from "./UI/CustomCard";
+import SectionDivider from "./UI/SectionDivider";
 
 const InputForm = () => {
   const [name, setName] = useState("");
@@ -120,40 +122,9 @@ const InputForm = () => {
         >
           Enter your details to generate a complete Resume
         </Typography>
-        <Card
-          variant="outlined"
-          sx={{
-            padding: 7,
-            display: "flex",
-            flexDirection: "column",
-
-            borderRadius: "2em",
-            margin: 2,
-            backgroundColor: "#f1f2fa",
-            backgroundImage:
-              "linear-gradient(55deg, #f1f2fa 0%, #ffedfe 46%, #faf5f2 100%)",
-          }}
-        >
+        <CustomCard>
           <Grid container spacing={3} component="form">
-            <Typography
-              variant="h4"
-              fontWeight="bold"
-              width={"100%"}
-              textAlign="center"
-              m={3}
-              sx={{
-                fontFamily: "Palatino",
-
-                border: "2px black solid",
-                padding: "0.5em",
-                backgroundColor: "#8bf1f2",
-                backgroundImage:
-                  "linear-gradient(90deg, #8bf1f2 0%, #e5bff0 50%, #d176d0 100%)",
-                borderRadius: "2em",
-              }}
-            >
-              Personal Information
-            </Typography>
+            <SectionDivider>Personal Information</SectionDivider>
 
             <Grid item xs={12} sm={6}>
               <TextField
@@ -256,25 +227,7 @@ const InputForm = () => {
                 onChange={(e) => setLinkedIn(e.target.value)}
               ></TextField>
             </Grid>
-            <Typography
-              variant="h4"
-              fontWeight="bold"
-              width={"100%"}
-              textAlign="center"
-              m={3}
-              sx={{
-                fontFamily: "Palatino",
-
-                border: "2px black solid",
-                padding: "0.5em",
-                backgroundColor: "#8bf1f2",
-                backgroundImage:
-                  "linear-gradient(90deg, #8bf1f2 0%, #e5bff0 50%, #d176d0 100%)",
-                borderRadius: "2em",
-              }}
-            >
-              Education
-            </Typography>
+            <SectionDivider>Education</SectionDivider>
             <Grid item xs={12} sm>
               <TextField
                 name="degree"
@@ -323,25 +276,7 @@ const InputForm = () => {
                 onChange={(e) => setYearCompleted(e.target.value)}
               ></TextField>
             </Grid>
-            <Typography
-              variant="h4"
-              fontWeight="bold"
-              width={"100%"}
-              textAlign="center"
-              m={3}
-              sx={{
-                fontFamily: "Palatino",
-
-                border: "2px black solid",
-                padding: "0.5em",
-                backgroundColor: "#8bf1f2",
-                backgroundImage:
-                  "linear-gradient(90deg, #8bf1f2 0%, #e5bff0 50%, #d176d0 100%)",
-                borderRadius: "2em",
-              }}
-            >
-              Professional Experience
-            </Typography>
+            <SectionDivider>Professional Experience</SectionDivider>
             <Grid item xs={12} sm={6}>
               <TextField
                 name="Role"
@@ -378,25 +313,7 @@ const InputForm = () => {
                 onChange={(e) => setYearsCompany(e.target.value)}
               ></TextField>
             </Grid>
-            <Typography
-              variant="h4"
-              fontWeight="bold"
-              width={"100%"}
-              textAlign="center"
-              m={3}
-              sx={{
-                fontFamily: "Palatino",
-
-                border: "2px black solid",
-                padding: "0.5em",
-                backgroundColor: "#8bf1f2",
-                backgroundImage:
-                  "linear-gradient(90deg, #8bf1f2 0%, #e5bff0 50%, #d176d0 100%)",
-                borderRadius: "2em",
-              }}
-            >
-              Skills and Interests
-            </Typography>
+            <SectionDivider>Skills</SectionDivider>
             <Grid item xs={12} sm={6}>
               <TextField
                 name="skills"
@@ -409,6 +326,7 @@ const InputForm = () => {
                 onChange={(e) => setSkills(e.target.value)}
               ></TextField>
             </Grid>
+            <SectionDivider>Interests</SectionDivider>
             <Grid item xs={12} sm={6}>
               <TextField
                 name="interests"
@@ -422,7 +340,7 @@ const InputForm = () => {
               ></TextField>
             </Grid>
           </Grid>
-        </Card>
+        </CustomCard>
 
         <Box textAlign="center">
           <Button
