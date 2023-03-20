@@ -228,7 +228,7 @@ const InputForm = () => {
               ></TextField>
             </Grid>
             <SectionDivider>Education</SectionDivider>
-            <Grid item xs={12} sm>
+            <Grid item xs={12} sm={6}>
               <TextField
                 name="degree"
                 variant="outlined"

@@ -15,9 +15,10 @@ const Resume = () => {
     <>
       <CustomCard>
         <Stack
-          direction="row"
+          direction={{ xs: "column", sm: "row" }}
           divider={<Divider orientation="vertical" flexItem />}
-          justifyContent="center"
+          justifyContent="space-around"
+          alignItems="center"
         >
           <img
             src={formData.image}
@@ -51,8 +52,7 @@ const Resume = () => {
           </Stack>
         </Stack>
         <Stack
-          direction="row"
-          spacing={10}
+          direction={{ xs: "column", sm: "row" }}
           mt={3}
           justifyContent="space-evenly"
           bgcolor="royalblue"
@@ -97,7 +97,7 @@ const Resume = () => {
           </Stack>
         </Stack>
         <Grid container spacing={1}>
-          <Grid item xs={6}>
+          <Grid item xs={6} sm={6}>
             <Stack mt={3}>
               <Typography variant="h4" fontWeight="bold" mb={3}>
                 EDUCATION
@@ -124,18 +124,18 @@ const Resume = () => {
             </Stack>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Stack mt={3}>
               <Typography variant="h4" fontWeight="bold" mb={3}>
                 SKILLS
               </Typography>
-              <Typography variant="h1">{formData.skills}</Typography>
+              <Typography variant="h6">{formData.skills}</Typography>
             </Stack>
             <Stack mt={10}>
               <Typography variant="h4" fontWeight="bold" mb={3}>
                 INTERESTS
               </Typography>
-              <Typography variant="h1">{formData.interests}</Typography>
+              <Typography variant="h6">{formData.interests}</Typography>
             </Stack>
           </Grid>
         </Grid>
