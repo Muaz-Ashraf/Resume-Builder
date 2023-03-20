@@ -27,6 +27,7 @@ const InputForm = () => {
   const [university, setUniversity] = useState("");
   const [yearEnrolled, setYearEnrolled] = useState("");
   const [yearCompleted, setYearCompleted] = useState("");
+
   const [role, setRole] = useState("");
   const [company, setCompany] = useState("");
   const [yearsCompany, setYearsCompany] = useState("");
@@ -163,11 +164,11 @@ const InputForm = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                rows={4}
                 name="description"
                 value={description}
-                variant="filled"
+                variant="outlined"
                 label={"Describe yourself and your achievements briefly"}
-                InputLabelProps={{ style: labelStyle }}
                 type="text"
                 multiline
                 fullWidth
