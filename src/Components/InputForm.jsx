@@ -41,12 +41,7 @@ const InputForm = () => {
   };
   return (
     <>
-      <Box
-        sx={{
-          backgroundImage: "url('./assets/background.jpg')",
-          height: "100vh",
-        }}
-      >
+      <Box>
         <Typography
           variant="h1"
           textAlign="center"
