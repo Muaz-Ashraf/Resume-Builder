@@ -1,25 +1,126 @@
-import { Card, Typography } from "@mui/material";
+import { Card, Grid, Typography, Divider } from "@mui/material";
+import { Box, Stack } from "@mui/system";
 import React from "react";
 import { useLocation } from "react-router-dom";
+import EmailIcon from "@mui/icons-material/Email";
+import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 const Resume = () => {
   const location = useLocation();
   const formData = location.state;
   return (
     <>
-      <Typography variant="h1">{formData.name}</Typography>
-      <Typography variant="h1">{formData.title}</Typography>
-      <Typography variant="h1">{formData.description}</Typography>
-      <Typography variant="h1">{formData.email}</Typography>
-      <Typography variant="h1">{formData.phone}</Typography>
-      <Typography variant="h1">{formData.location}</Typography>
-      <Typography variant="h1">{formData.linkedIn}</Typography>
-      <Typography variant="h1">{formData.degree}</Typography>
-      <Typography variant="h1">{formData.university}</Typography>
-      <Typography variant="h1">{formData.yearCompleted}</Typography>
-      <Typography variant="h1">{formData.experience}</Typography>
-      <Typography variant="h1">{formData.skills}</Typography>
-      <Typography variant="h1">{formData.interests}</Typography>
+      <Box mt={5}>
+        <Stack
+          direction="row"
+          divider={<Divider orientation="vertical" flexItem />}
+          justifyContent="center"
+        >
+          <img
+            src={formData.image}
+            style={{
+              height: "200px",
+              width: "200px",
+              borderRadius: "50%",
+
+              marginLeft: "5rem",
+              marginRight: "5rem",
+            }}
+          />
+
+          <Stack ml={5}>
+            <Typography
+              variant="h3"
+              sx={{
+                color: "blue",
+              }}
+              textAlign="left"
+            >
+              {formData.name}
+            </Typography>
+
+            <Typography variant="h5" textAlign="left">
+              {formData.title}
+            </Typography>
+            <Typography variant="body1" textAlign="left" mt={3}>
+              {formData.description}
+            </Typography>
+          </Stack>
+        </Stack>
+        <Stack
+          direction="row"
+          spacing={10}
+          mt={3}
+          justifyContent="space-evenly"
+          bgcolor="royalblue"
+          color="white"
+          p={1}
+        >
+          <Stack
+            direction={"row"}
+            spacing={1}
+            alignItems="center"
+            justifyContent={"flex-start"}
+          >
+            <EmailIcon />
+            <Typography variant="h6">{formData.email}</Typography>
+          </Stack>
+          <Stack
+            direction={"row"}
+            spacing={1}
+            alignItems="center"
+            justifyContent={"flex-start"}
+          >
+            <PhoneIphoneIcon />
+            <Typography variant="h6">{formData.phone}</Typography>
+          </Stack>
+          <Stack
+            direction={"row"}
+            spacing={1}
+            alignItems="center"
+            justifyContent={"flex-start"}
+          >
+            <LocationOnIcon />
+            <Typography variant="h6">{formData.location}</Typography>
+          </Stack>
+          <Stack
+            direction={"row"}
+            spacing={1}
+            alignItems="center"
+            justifyContent={"flex-start"}
+          >
+            <LinkedInIcon />
+            <Typography variant="h6">{formData.linkedIn}</Typography>
+          </Stack>
+        </Stack>
+
+        <Stack mt={3} ml={4}>
+          <Typography variant="h4" fontWeight="bold" mb={3}>
+            EDUCATION
+          </Typography>
+          <Typography variant="h6" fontWeight="bold">
+            {formData.degree}
+          </Typography>
+          <Typography variant="h6">{formData.university}</Typography>
+          <Typography variant="body1">
+            {formData.yearEnrolled} - {formData.yearCompleted}
+          </Typography>
+        </Stack>
+        <Stack mt={10} ml={4}>
+          <Typography variant="h4" fontWeight="bold" mb={3}>
+            WORK EXPERIENCE
+          </Typography>
+          <Typography variant="h6" fontWeight="bold">
+            {formData.role}
+          </Typography>
+          <Typography variant="h6">{formData.company}</Typography>
+          <Typography variant="h6">{formData.yearsCompany} years</Typography>
+        </Stack>
+        <Typography variant="h1">{formData.skills}</Typography>
+        <Typography variant="h1">{formData.interests}</Typography>
+      </Box>
     </>
   );
 };

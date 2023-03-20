@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Box, Button, Card, Grid, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  FormControlLabel,
+  Grid,
+  Input,
+  InputLabel,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const InputForm = () => {
@@ -7,38 +17,84 @@ const InputForm = () => {
   const [title, setTitle] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState(null);
   const [phone, setPhone] = useState("");
   const [location, setLocation] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
   const [degree, setDegree] = useState("");
   const [university, setUniversity] = useState("");
+  const [yearEnrolled, setYearEnrolled] = useState("");
   const [yearCompleted, setYearCompleted] = useState("");
-  const [experience, setExperience] = useState("");
+  const [role, setRole] = useState("");
+  const [company, setCompany] = useState("");
+  const [yearsCompany, setYearsCompany] = useState("");
   const [skills, setSkills] = useState("");
   const [interests, setInterests] = useState("");
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState();
   const navigate = useNavigate();
   const labelStyle = { fontSize: "0.8em" };
 
   const submitHandler = (e) => {
+    e.preventDefault();
     const formData = {
       name,
       title,
       email,
       description,
+      image,
       phone,
       location,
       linkedIn,
       degree,
       university,
+      yearEnrolled,
       yearCompleted,
-      experience,
+      role,
+      company,
+      yearsCompany,
       skills,
       interests,
     };
     setFormData(formData);
+    const requiredFields = [
+      "name",
+      "title",
+      "email",
+      "description",
+      "image",
+      "phone",
+      "location",
+      "linkedIn",
+      "degree",
+      "university",
+      "yearEnrolled",
+      "yearCompleted",
+      "role",
+      "company",
+      "yearsCompany",
+      "skills",
+      "interests",
+    ];
+    setFormData(formData);
     navigate("./resume", { state: formData });
+    // const isFormValid = requiredFields.every((field) => formData[field]);
+    // if (isFormValid) {
+    //   setFormData(formData);
+    //   navigate("./resume", { state: formData });
+    // } else {
+    //   alert("Please fill out all required fields.");
+    // }
   };
+
+  const imageHandler = (event) => {
+    const selectedImage = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedImage);
+    reader.onload = () => {
+      setImage(reader.result);
+    };
+  };
+
   return (
     <>
       <Box>
@@ -53,7 +109,15 @@ const InputForm = () => {
         >
           Resume Builder
         </Typography>
-        <Typography variant="h6" fontWeight="bold" textAlign="center" m={5}>
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          textAlign="center"
+          m={5}
+          sx={{
+            fontFamily: "Palatino",
+          }}
+        >
           Enter your details to generate a complete Resume
         </Typography>
         <Card
@@ -63,8 +127,6 @@ const InputForm = () => {
             display: "flex",
             flexDirection: "column",
 
-            backgroundColor: "white",
-
             borderRadius: "2em",
             margin: 2,
             backgroundColor: "#f1f2fa",
@@ -73,39 +135,64 @@ const InputForm = () => {
           }}
         >
           <Grid container spacing={3} component="form">
-            <Grid item xs={12} sm={6} style={{ order: 1 }}>
-              <Typography variant="h5" fontWeight="bold">
-                Personal Information
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} style={{ order: 2 }}>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              width={"100%"}
+              textAlign="center"
+              m={3}
+              sx={{
+                fontFamily: "Palatino",
+
+                border: "2px black solid",
+                padding: "0.5em",
+                backgroundColor: "#8bf1f2",
+                backgroundImage:
+                  "linear-gradient(90deg, #8bf1f2 0%, #e5bff0 50%, #d176d0 100%)",
+                borderRadius: "2em",
+              }}
+            >
+              Personal Information
+            </Typography>
+
+            <Grid item xs={12} sm={6}>
               <TextField
+                name="name"
                 value={name}
                 variant="outlined"
                 label="Name"
-                size="large"
                 type="text"
                 fullWidth
                 required
                 onChange={(e) => setName(e.target.value)}
               ></TextField>
             </Grid>
-            <Grid item xs={12} sm={6} style={{ order: 3 }}>
+            <Grid item xs={12} sm={6}>
               <TextField
+                name="title"
                 id="title"
                 value={title}
                 variant="outlined"
                 label="Title"
-                size="large"
                 type="text"
                 fullWidth
                 required
                 onChange={(e) => setTitle(e.target.value)}
               ></TextField>
             </Grid>
-            <Grid item xs={12} sm={6} style={{ order: 4 }}>
+            <Grid item xs={12} sm={6}>
+              <InputLabel htmlFor="image">Upload an Image</InputLabel>
+              <Input
+                name="Image"
+                accept="image/*"
+                type="file"
+                id="image"
+                onChange={imageHandler}
+              ></Input>
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <TextField
-                id="description"
+                name="description"
                 value={description}
                 variant="filled"
                 label={"Describe yourself and your achievements briefly"}
@@ -118,9 +205,9 @@ const InputForm = () => {
               ></TextField>
             </Grid>
 
-            <Grid item xs={12} sm={6} style={{ order: 5 }}>
+            <Grid item xs={12} sm={6}>
               <TextField
-                id="email"
+                name="email"
                 value={email}
                 type="email"
                 variant="outlined"
@@ -131,8 +218,9 @@ const InputForm = () => {
               ></TextField>
             </Grid>
 
-            <Grid item xs={12} sm={6} style={{ order: 6 }}>
+            <Grid item xs={12} sm={6}>
               <TextField
+                name="phone"
                 variant="outlined"
                 value={phone}
                 label="Phone Number"
@@ -143,8 +231,9 @@ const InputForm = () => {
               ></TextField>
             </Grid>
 
-            <Grid item xs={12} sm={6} style={{ order: 7 }}>
+            <Grid item xs={12} sm={6}>
               <TextField
+                name="location"
                 variant="outlined"
                 label="Location"
                 value={location}
@@ -155,10 +244,11 @@ const InputForm = () => {
               ></TextField>
             </Grid>
 
-            <Grid item xs={12} sm={6} style={{ order: 8 }}>
+            <Grid item xs={12} sm={6}>
               <TextField
+                name="LinkedIn"
                 variant="outlined"
-                label="LinkedIn"
+                label="LinkedIn ID url"
                 value={linkedIn}
                 type="text"
                 fullWidth
@@ -166,13 +256,28 @@ const InputForm = () => {
                 onChange={(e) => setLinkedIn(e.target.value)}
               ></TextField>
             </Grid>
-            <Grid item xs={12} sm={6} style={{ order: 9 }}>
-              <Typography variant="h5" fontWeight="bold">
-                Education
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} style={{ order: 10 }}>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              width={"100%"}
+              textAlign="center"
+              m={3}
+              sx={{
+                fontFamily: "Palatino",
+
+                border: "2px black solid",
+                padding: "0.5em",
+                backgroundColor: "#8bf1f2",
+                backgroundImage:
+                  "linear-gradient(90deg, #8bf1f2 0%, #e5bff0 50%, #d176d0 100%)",
+                borderRadius: "2em",
+              }}
+            >
+              Education
+            </Typography>
+            <Grid item xs={12} sm>
               <TextField
+                name="degree"
                 variant="outlined"
                 value={degree}
                 label="Degree"
@@ -182,8 +287,9 @@ const InputForm = () => {
                 onChange={(e) => setDegree(e.target.value)}
               ></TextField>
             </Grid>
-            <Grid item xs={12} sm={6} style={{ order: 11 }}>
+            <Grid item xs={12} sm={6}>
               <TextField
+                name="university"
                 variant="outlined"
                 value={university}
                 label="University"
@@ -193,8 +299,21 @@ const InputForm = () => {
                 onChange={(e) => setUniversity(e.target.value)}
               ></TextField>
             </Grid>
-            <Grid item xs={12} sm={6} style={{ order: 12 }}>
+            <Grid item xs={12} sm={6}>
               <TextField
+                name="Year of Enrollment"
+                variant="outlined"
+                value={yearEnrolled}
+                label="Year of Enrollment"
+                type="text"
+                fullWidth
+                required
+                onChange={(e) => setYearEnrolled(e.target.value)}
+              ></TextField>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="Year of Completion"
                 variant="outlined"
                 value={yearCompleted}
                 label="Year of Completion"
@@ -204,24 +323,83 @@ const InputForm = () => {
                 onChange={(e) => setYearCompleted(e.target.value)}
               ></TextField>
             </Grid>
-            <Grid item xs={12} sm={6} style={{ order: 13 }}>
-              <Typography variant="h5" fontWeight="bold">
-                Professional Experience
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} style={{ order: 14 }}>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              width={"100%"}
+              textAlign="center"
+              m={3}
+              sx={{
+                fontFamily: "Palatino",
+
+                border: "2px black solid",
+                padding: "0.5em",
+                backgroundColor: "#8bf1f2",
+                backgroundImage:
+                  "linear-gradient(90deg, #8bf1f2 0%, #e5bff0 50%, #d176d0 100%)",
+                borderRadius: "2em",
+              }}
+            >
+              Professional Experience
+            </Typography>
+            <Grid item xs={12} sm={6}>
               <TextField
-                value={experience}
+                name="Role"
+                value={role}
                 variant="outlined"
-                label="Experience"
+                label="Role"
                 type="text"
                 fullWidth
                 required
-                onChange={(e) => setExperience(e.target.value)}
+                onChange={(e) => setRole(e.target.value)}
               ></TextField>
             </Grid>
-            <Grid item xs={12} sm={6} style={{ order: 15 }}>
+            <Grid item xs={12} sm={6}>
               <TextField
+                name="company"
+                value={company}
+                variant="outlined"
+                label="Company Name"
+                type="text"
+                fullWidth
+                required
+                onChange={(e) => setCompany(e.target.value)}
+              ></TextField>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="Years"
+                value={yearsCompany}
+                variant="outlined"
+                label="Years of Experience"
+                type="number"
+                fullWidth
+                required
+                onChange={(e) => setYearsCompany(e.target.value)}
+              ></TextField>
+            </Grid>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              width={"100%"}
+              textAlign="center"
+              m={3}
+              sx={{
+                fontFamily: "Palatino",
+
+                border: "2px black solid",
+                padding: "0.5em",
+                backgroundColor: "#8bf1f2",
+                backgroundImage:
+                  "linear-gradient(90deg, #8bf1f2 0%, #e5bff0 50%, #d176d0 100%)",
+                borderRadius: "2em",
+              }}
+            >
+              Skills and Interests
+            </Typography>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="skills"
                 value={skills}
                 variant="outlined"
                 label="Skills"
@@ -231,8 +409,9 @@ const InputForm = () => {
                 onChange={(e) => setSkills(e.target.value)}
               ></TextField>
             </Grid>
-            <Grid item xs={12} sm={6} style={{ order: 16 }}>
+            <Grid item xs={12} sm={6}>
               <TextField
+                name="interests"
                 value={interests}
                 variant="outlined"
                 label="Interests"
