@@ -103,7 +103,8 @@ const Resume = () => {
                 EDUCATION
               </Typography>
               <Typography variant="h6" fontWeight="bold">
-                {formData.degree}
+                {formData.educationDetails.degree}
+                {console.log(formData.educationDetails.degree)}
               </Typography>
               <Typography variant="h6">{formData.university}</Typography>
               <Typography variant="body1">

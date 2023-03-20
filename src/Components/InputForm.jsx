@@ -23,10 +23,15 @@ const InputForm = () => {
   const [phone, setPhone] = useState("");
   const [location, setLocation] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
-  const [degree, setDegree] = useState("");
-  const [university, setUniversity] = useState("");
-  const [yearEnrolled, setYearEnrolled] = useState("");
-  const [yearCompleted, setYearCompleted] = useState("");
+
+  const [educationDetails, setEducationDetails] = useState([
+    {
+      degree: "",
+      university: "",
+      yearEnrolled: "",
+      yearCompleted: "",
+    },
+  ]);
 
   const [role, setRole] = useState("");
   const [company, setCompany] = useState("");
@@ -35,7 +40,6 @@ const InputForm = () => {
   const [interests, setInterests] = useState("");
   const [formData, setFormData] = useState();
   const navigate = useNavigate();
-  const labelStyle = { fontSize: "0.8em" };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -48,17 +52,14 @@ const InputForm = () => {
       phone,
       location,
       linkedIn,
-      degree,
-      university,
-      yearEnrolled,
-      yearCompleted,
+      educationDetails,
       role,
       company,
       yearsCompany,
       skills,
       interests,
     };
-    setFormData(formData);
+
     const requiredFields = [
       "name",
       "title",
@@ -88,6 +89,7 @@ const InputForm = () => {
     //   alert("Please fill out all required fields.");
     // }
   };
+  console.log(formData);
 
   const imageHandler = (event) => {
     const selectedImage = event.target.files[0];
@@ -97,7 +99,23 @@ const InputForm = () => {
       setImage(reader.result);
     };
   };
-
+  const addEducationHandler = () => {
+    const educationForm = {
+      degree: "",
+      university: "",
+      yearEnrolled: "",
+      yearCompleted: "",
+    };
+    setEducationDetails([...educationDetails, educationForm]);
+  };
+  const handleEducationDetailChange = (index, field, value) => {
+    const updatedEducationDetails = [...educationDetails];
+    updatedEducationDetails[index] = {
+      ...updatedEducationDetails[index],
+      [field]: value,
+    };
+    setEducationDetails(updatedEducationDetails);
+  };
   return (
     <>
       <Box>
@@ -153,7 +171,7 @@ const InputForm = () => {
               ></TextField>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <InputLabel htmlFor="image">Upload an Image</InputLabel>
+              <InputLabel htmlFor="image">Upload your Picture</InputLabel>
               <Input
                 name="Image"
                 accept="image/*"
@@ -229,54 +247,96 @@ const InputForm = () => {
               ></TextField>
             </Grid>
             <SectionDivider>Education</SectionDivider>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="degree"
-                variant="outlined"
-                value={degree}
-                label="Degree"
-                type="text"
-                fullWidth
-                required
-                onChange={(e) => setDegree(e.target.value)}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="university"
-                variant="outlined"
-                value={university}
-                label="University"
-                type="text"
-                fullWidth
-                required
-                onChange={(e) => setUniversity(e.target.value)}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="Year of Enrollment"
-                variant="outlined"
-                value={yearEnrolled}
-                label="Year of Enrollment"
-                type="text"
-                fullWidth
-                required
-                onChange={(e) => setYearEnrolled(e.target.value)}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="Year of Completion"
-                variant="outlined"
-                value={yearCompleted}
-                label="Year of Completion"
-                type="text"
-                fullWidth
-                required
-                onChange={(e) => setYearCompleted(e.target.value)}
-              ></TextField>
-            </Grid>
+
+            {educationDetails.map((values, index) => {
+              return (
+                <Grid container key={index} spacing={3} mt={3} p={4}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="degree"
+                      variant="outlined"
+                      value={values.degree}
+                      label="Degree"
+                      type="text"
+                      fullWidth
+                      required
+                      onChange={(e) =>
+                        handleEducationDetailChange(
+                          index,
+                          "degree",
+                          e.target.value
+                        )
+                      }
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="university"
+                      variant="outlined"
+                      value={values.university}
+                      label="University"
+                      type="text"
+                      fullWidth
+                      required
+                      onChange={(e) =>
+                        handleEducationDetailChange(
+                          index,
+                          "university",
+                          e.target.value
+                        )
+                      }
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="Year of Enrollment"
+                      variant="outlined"
+                      value={values.yearEnrolled}
+                      label="Year of Enrollment"
+                      type="number"
+                      fullWidth
+                      required
+                      onChange={(e) =>
+                        handleEducationDetailChange(
+                          index,
+                          "yearEnrolled",
+                          e.target.value
+                        )
+                      }
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="Year of Completion"
+                      variant="outlined"
+                      value={values.yearCompleted}
+                      label="Year of Completion"
+                      type="number"
+                      fullWidth
+                      required
+                      onChange={(e) =>
+                        handleEducationDetailChange(
+                          index,
+                          "yearCompleted",
+                          e.target.value
+                        )
+                      }
+                    ></TextField>
+                  </Grid>
+                </Grid>
+              );
+            })}
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              m={5}
+            >
+              <Button onClick={addEducationHandler}>
+                Add Education Details +
+              </Button>
+            </Box>
+
             <SectionDivider>Professional Experience</SectionDivider>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -350,7 +410,8 @@ const InputForm = () => {
             sx={{
               padding: 3,
 
-              margin: 3,
+              mt: 3,
+              mb: 3,
               borderRadius: "3em",
             }}
             onClick={submitHandler}
