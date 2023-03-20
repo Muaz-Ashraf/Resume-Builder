@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import {
   Box,
   Button,
-  Card,
-  FormControlLabel,
   Grid,
   Input,
   InputLabel,
@@ -15,14 +13,18 @@ import CustomCard from "./UI/CustomCard";
 import SectionDivider from "./UI/SectionDivider";
 
 const InputForm = () => {
-  const [name, setName] = useState("");
-  const [title, setTitle] = useState("");
-  const [email, setEmail] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
-  const [phone, setPhone] = useState("");
-  const [location, setLocation] = useState("");
-  const [linkedIn, setLinkedIn] = useState("");
+  const [personalInfo, setPersonalInfo] = useState([
+    {
+      name: "",
+      title: "",
+      email: "",
+      description: "",
+      image: null,
+      phone: "",
+      location: "",
+      linkedIn: "",
+    },
+  ]);
 
   const [educationDetails, setEducationDetails] = useState([
     {
@@ -33,9 +35,10 @@ const InputForm = () => {
     },
   ]);
 
-  const [role, setRole] = useState("");
-  const [company, setCompany] = useState("");
-  const [yearsCompany, setYearsCompany] = useState("");
+  const [experience, setExperience] = useState([
+    { role: "", company: "", yearsCompany: "" },
+  ]);
+
   const [skills, setSkills] = useState("");
   const [interests, setInterests] = useState("");
   const [formData, setFormData] = useState();
@@ -43,52 +46,12 @@ const InputForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const formData = {
-      name,
-      title,
-      email,
-      description,
-      image,
-      phone,
-      location,
-      linkedIn,
-      educationDetails,
-      role,
-      company,
-      yearsCompany,
-      skills,
-      interests,
-    };
+    const formData = {};
 
-    const requiredFields = [
-      "name",
-      "title",
-      "email",
-      "description",
-      "image",
-      "phone",
-      "location",
-      "linkedIn",
-      "degree",
-      "university",
-      "yearEnrolled",
-      "yearCompleted",
-      "role",
-      "company",
-      "yearsCompany",
-      "skills",
-      "interests",
-    ];
     setFormData(formData);
     navigate("./resume", { state: formData });
-    // const isFormValid = requiredFields.every((field) => formData[field]);
-    // if (isFormValid) {
-    //   setFormData(formData);
-    //   navigate("./resume", { state: formData });
-    // } else {
-    //   alert("Please fill out all required fields.");
-    // }
   };
+
   console.log(formData);
 
   const imageHandler = (event) => {
@@ -108,6 +71,15 @@ const InputForm = () => {
     };
     setEducationDetails([...educationDetails, educationForm]);
   };
+  const addExperienceHandler = () => {
+    const experienceForm = {
+      role: "",
+      company: "",
+      yearsCompany: "",
+    };
+    setExperience([...experience, experienceForm]);
+  };
+
   const handleEducationDetailChange = (index, field, value) => {
     const updatedEducationDetails = [...educationDetails];
     updatedEducationDetails[index] = {
@@ -115,6 +87,14 @@ const InputForm = () => {
       [field]: value,
     };
     setEducationDetails(updatedEducationDetails);
+  };
+  const handleExperienceChange = (index, field, value) => {
+    const updatedExperience = [...experience];
+    updatedExperience[index] = {
+      ...updatedExperience[index],
+      [field]: value,
+    };
+    setExperience(updatedExperience);
   };
   return (
     <>
@@ -145,107 +125,106 @@ const InputForm = () => {
           <Grid container spacing={3} component="form">
             <SectionDivider>Personal Information</SectionDivider>
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="name"
-                value={name}
-                variant="outlined"
-                label="Name"
-                type="text"
-                fullWidth
-                required
-                onChange={(e) => setName(e.target.value)}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="title"
-                id="title"
-                value={title}
-                variant="outlined"
-                label="Title"
-                type="text"
-                fullWidth
-                required
-                onChange={(e) => setTitle(e.target.value)}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputLabel htmlFor="image">Upload your Picture</InputLabel>
-              <Input
-                name="Image"
-                accept="image/*"
-                type="file"
-                id="image"
-                onChange={imageHandler}
-              ></Input>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                rows={4}
-                name="description"
-                value={description}
-                variant="outlined"
-                label={"Describe yourself and your achievements briefly"}
-                type="text"
-                multiline
-                fullWidth
-                required
-                onChange={(e) => setDescription(e.target.value)}
-              ></TextField>
-            </Grid>
+            {personalInfo.map((values, index) => {
+              return (
+                <Grid container key={index} spacing={3} mt={3} p={4}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="name"
+                      value={values.name}
+                      variant="outlined"
+                      label="Name"
+                      type="text"
+                      fullWidth
+                      required
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="title"
+                      id="title"
+                      value={values.title}
+                      variant="outlined"
+                      label="Title"
+                      type="text"
+                      fullWidth
+                      required
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <InputLabel htmlFor="image">Upload your Picture</InputLabel>
+                    <Input
+                      name="Image"
+                      accept="image/*"
+                      type="file"
+                      id="image"
+                      onChange={imageHandler}
+                    ></Input>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      rows={4}
+                      name="description"
+                      value={values.description}
+                      variant="outlined"
+                      label={"Describe yourself and your achievements briefly"}
+                      type="text"
+                      multiline
+                      fullWidth
+                      required
+                    ></TextField>
+                  </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="email"
-                value={email}
-                type="email"
-                variant="outlined"
-                label="Email"
-                fullWidth
-                required
-                onChange={(e) => setEmail(e.target.value)}
-              ></TextField>
-            </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="email"
+                      value={values.email}
+                      type="email"
+                      variant="outlined"
+                      label="Email"
+                      fullWidth
+                      required
+                    ></TextField>
+                  </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="phone"
-                variant="outlined"
-                value={phone}
-                label="Phone Number"
-                type="number"
-                fullWidth
-                required
-                onChange={(e) => setPhone(e.target.value)}
-              ></TextField>
-            </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="phone"
+                      variant="outlined"
+                      value={values.phone}
+                      label="Phone Number"
+                      type="number"
+                      fullWidth
+                      required
+                    ></TextField>
+                  </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="location"
-                variant="outlined"
-                label="Location"
-                value={location}
-                type="text"
-                fullWidth
-                required
-                onChange={(e) => setLocation(e.target.value)}
-              ></TextField>
-            </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="location"
+                      variant="outlined"
+                      label="Location"
+                      value={values.location}
+                      type="text"
+                      fullWidth
+                      required
+                    ></TextField>
+                  </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="LinkedIn"
-                variant="outlined"
-                label="LinkedIn ID url"
-                value={linkedIn}
-                type="text"
-                fullWidth
-                required
-                onChange={(e) => setLinkedIn(e.target.value)}
-              ></TextField>
-            </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="LinkedIn"
+                      variant="outlined"
+                      label="LinkedIn ID url"
+                      value={values.linkedIn}
+                      type="text"
+                      fullWidth
+                      required
+                    ></TextField>
+                  </Grid>
+                </Grid>
+              );
+            })}
             <SectionDivider>Education</SectionDivider>
 
             {educationDetails.map((values, index) => {
@@ -338,42 +317,69 @@ const InputForm = () => {
             </Box>
 
             <SectionDivider>Professional Experience</SectionDivider>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="Role"
-                value={role}
-                variant="outlined"
-                label="Role"
-                type="text"
-                fullWidth
-                required
-                onChange={(e) => setRole(e.target.value)}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="company"
-                value={company}
-                variant="outlined"
-                label="Company Name"
-                type="text"
-                fullWidth
-                required
-                onChange={(e) => setCompany(e.target.value)}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="Years"
-                value={yearsCompany}
-                variant="outlined"
-                label="Years of Experience"
-                type="number"
-                fullWidth
-                required
-                onChange={(e) => setYearsCompany(e.target.value)}
-              ></TextField>
-            </Grid>
+            {experience.map((values, index) => {
+              return (
+                <Grid container key={index} spacing={3} mt={3} p={4}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="Role"
+                      value={values.role}
+                      variant="outlined"
+                      label="Role"
+                      type="text"
+                      fullWidth
+                      required
+                      onChange={(e) =>
+                        handleExperienceChange(index, "role", e.target.value)
+                      }
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="company"
+                      value={values.company}
+                      variant="outlined"
+                      label="Company Name"
+                      type="text"
+                      fullWidth
+                      required
+                      onChange={(e) =>
+                        handleExperienceChange(index, "company", e.target.value)
+                      }
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="Years"
+                      value={values.yearsCompany}
+                      variant="outlined"
+                      label="Years of Experience"
+                      type="number"
+                      fullWidth
+                      required
+                      onChange={(e) =>
+                        handleExperienceChange(
+                          index,
+                          "yearsCompany",
+                          e.target.value
+                        )
+                      }
+                    ></TextField>
+                  </Grid>
+                </Grid>
+              );
+            })}
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              m={5}
+            >
+              <Button onClick={addExperienceHandler}>
+                Add Experience Details +
+              </Button>
+            </Box>
+
             <SectionDivider>Skills</SectionDivider>
             <Grid item xs={12} sm={6}>
               <TextField
