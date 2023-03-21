@@ -13,38 +13,27 @@ import CustomCard from "./UI/CustomCard";
 import SectionDivider from "./UI/SectionDivider";
 
 const InputForm = () => {
-  const [personalInfo, setPersonalInfo] = useState([
+  const [formData, setFormData] = useState([
     {
       name: "",
-      title: "",
       email: "",
-      description: "",
-      image: "",
       phone: "",
-      location: "",
       linkedIn: "",
+      image: "",
+      education: [
+        { degree: "", university: "", yearEnrolled: "", yearCompleted: "" },
+      ],
+      experience: [
+        {
+          role: "",
+          company: "",
+          yearsCompany: "",
+        },
+      ],
+      skills: [],
+      interests: [],
     },
   ]);
-
-  const [educationDetails, setEducationDetails] = useState([
-    {
-      degree: "",
-      university: "",
-      yearEnrolled: "",
-      yearCompleted: "",
-    },
-  ]);
-
-  const [experience, setExperience] = useState([
-    {
-      role: "",
-      company: "",
-      yearsCompany: "",
-    },
-  ]);
-
-  const [skills, setSkills] = useState("");
-  const [interests, setInterests] = useState("");
 
   const navigate = useNavigate();
 
@@ -55,7 +44,7 @@ const InputForm = () => {
       yearEnrolled: "",
       yearCompleted: "",
     };
-    setEducationDetails([...educationDetails, educationForm]);
+    setFormData([...formData, educationForm]);
   };
   const addExperienceHandler = () => {
     const experienceForm = {
@@ -64,43 +53,8 @@ const InputForm = () => {
       company: "",
       yearsCompany: "",
     };
-    setExperience([...experience, experienceForm]);
+    setFormData([...formData, experienceForm]);
   };
-
-  const handlePersonalInfoChange = (index, field, value) => {
-    const updatedPersonalInfo = [...personalInfo];
-    updatedPersonalInfo[index] = {
-      ...updatedPersonalInfo[index],
-      [field]: value,
-    };
-    setPersonalInfo(updatedPersonalInfo);
-  };
-
-  const handleEducationDetailChange = (index, field, value) => {
-    const updatedEducationDetails = [...educationDetails];
-    updatedEducationDetails[index] = {
-      ...updatedEducationDetails[index],
-      [field]: value,
-    };
-    setEducationDetails(updatedEducationDetails);
-  };
-  const handleExperienceChange = (index, field, value) => {
-    const updatedExperience = [...experience];
-    updatedExperience[index] = {
-      ...updatedExperience[index],
-      [field]: value,
-    };
-    setExperience(updatedExperience);
-  };
-  const [formData, setFormData] = useState([
-    {
-      personalInfo,
-      educationDetails: [{}],
-      experience: [{}],
-      skills,
-      interests,
-    },
-  ]);
 
   function submitHandler(e) {
     e.preventDefault();
@@ -138,7 +92,7 @@ const InputForm = () => {
           <Grid container spacing={3} component="form">
             <SectionDivider>Personal Information</SectionDivider>
 
-            {personalInfo.map((values, index) => {
+            {formData.map((values, index) => {
               return (
                 <Grid container key={index} spacing={3} mt={3} p={4}>
                   <Grid item xs={12} sm={6}>
@@ -284,7 +238,7 @@ const InputForm = () => {
             })}
             <SectionDivider>Education</SectionDivider>
 
-            {educationDetails.map((values, index) => {
+            {formData.education.map((values, index) => {
               return (
                 <Grid container key={index} spacing={3} mt={3} p={4}>
                   <Grid item xs={12} sm={6}>
@@ -374,7 +328,7 @@ const InputForm = () => {
             </Box>
 
             <SectionDivider>Professional Experience</SectionDivider>
-            {experience.map((values, index) => {
+            {formData.experience.map((values, index) => {
               return (
                 <Grid container key={index} spacing={3} mt={3} p={4}>
                   <Grid item xs={12} sm={6}>
@@ -441,7 +395,7 @@ const InputForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 name="skills"
-                value={skills}
+                value={formData.skills}
                 variant="outlined"
                 label="Skills"
                 type="text"
@@ -454,7 +408,7 @@ const InputForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 name="interests"
-                value={interests}
+                value={formData.interests}
                 variant="outlined"
                 label="Interests"
                 type="text"
