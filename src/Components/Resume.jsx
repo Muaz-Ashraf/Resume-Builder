@@ -21,7 +21,7 @@ const Resume = () => {
           alignItems="center"
         >
           <img
-            src={formData.image}
+            src={formData.personalInfo[0].image}
             style={{
               height: "200px",
               width: "200px",
@@ -40,14 +40,14 @@ const Resume = () => {
               }}
               textAlign="left"
             >
-              {formData.name}
+              {formData[0].name}
             </Typography>
 
             <Typography variant="h5" textAlign="left">
-              {formData.title}
+              {formData[0].title}
             </Typography>
             <Typography variant="body1" textAlign="left" mt={3}>
-              {formData.description}
+              {formData[0].description}
             </Typography>
           </Stack>
         </Stack>
@@ -66,7 +66,7 @@ const Resume = () => {
             justifyContent={"flex-start"}
           >
             <EmailIcon />
-            <Typography variant="h6">{formData.email}</Typography>
+            <Typography variant="h6">{formData[0].email}</Typography>
           </Stack>
           <Stack
             direction={"row"}
@@ -75,7 +75,7 @@ const Resume = () => {
             justifyContent={"flex-start"}
           >
             <PhoneIphoneIcon />
-            <Typography variant="h6">{formData.phone}</Typography>
+            <Typography variant="h6">{formData[0].phone}</Typography>
           </Stack>
           <Stack
             direction={"row"}
@@ -84,7 +84,7 @@ const Resume = () => {
             justifyContent={"flex-start"}
           >
             <LocationOnIcon />
-            <Typography variant="h6">{formData.location}</Typography>
+            <Typography variant="h6">{formData[0].location}</Typography>
           </Stack>
           <Stack
             direction={"row"}
@@ -93,7 +93,7 @@ const Resume = () => {
             justifyContent={"flex-start"}
           >
             <LinkedInIcon />
-            <Typography variant="h6">{formData.linkedIn}</Typography>
+            <Typography variant="h6">{formData[0].linkedIn}</Typography>
           </Stack>
         </Stack>
         <Grid container spacing={1}>
@@ -103,12 +103,14 @@ const Resume = () => {
                 EDUCATION
               </Typography>
               <Typography variant="h6" fontWeight="bold">
-                {formData.educationDetails.degree}
-                {console.log(formData.educationDetails.degree)}
+                {formData[1].degree}
               </Typography>
-              <Typography variant="h6">{formData.university}</Typography>
+              <Typography variant="h6">
+                {formData.educationDetails[1].university}
+              </Typography>
               <Typography variant="body1">
-                {formData.yearEnrolled} - {formData.yearCompleted}
+                {formData.educationDetails[1].yearEnrolled} -{" "}
+                {formData.educationDetails[1].yearCompleted}
               </Typography>
             </Stack>
             <Stack mt={10}>
@@ -116,11 +118,13 @@ const Resume = () => {
                 WORK EXPERIENCE
               </Typography>
               <Typography variant="h6" fontWeight="bold">
-                {formData.role}
+                {formData.experience[0].role}
               </Typography>
-              <Typography variant="h6">{formData.company}</Typography>
               <Typography variant="h6">
-                {formData.yearsCompany} years
+                {formData.experience[0].company}
+              </Typography>
+              <Typography variant="h6">
+                {formData.experience[0].yearsCompany} years
               </Typography>
             </Stack>
           </Grid>
@@ -130,7 +134,15 @@ const Resume = () => {
               <Typography variant="h4" fontWeight="bold" mb={3}>
                 SKILLS
               </Typography>
-              <Typography variant="h6">{formData.skills}</Typography>
+              <Typography
+                variant="h6"
+                sx={{
+                  border: "1px solid blue",
+                  borderRadius: "2em",
+                }}
+              >
+                {formData.skills}
+              </Typography>
             </Stack>
             <Stack mt={10}>
               <Typography variant="h4" fontWeight="bold" mb={3}>
