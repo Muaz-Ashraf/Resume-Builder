@@ -43,8 +43,8 @@ const InputForm = () => {
     },
   ]);
 
-  const [skills, setSkills] = useState("");
-  const [interests, setInterests] = useState("");
+  const [skills, setSkills] = useState([]);
+  const [interests, setInterests] = useState([]);
 
   const navigate = useNavigate();
 
@@ -66,6 +66,27 @@ const InputForm = () => {
     };
     setExperience([...experience, experienceForm]);
   };
+  const addSkillHandler = () => {
+    const newSkill = "";
+    setSkills([...skills, newSkill]);
+  };
+  const handleSkillChange = (index, value) => {
+    const updatedSkills = [...skills];
+    updatedSkills[index] = value;
+    setSkills(updatedSkills);
+    setFormData({ ...formData, skills: updatedSkills });
+  };
+
+  const addInterestHandler = () => {
+    const newInterest = "";
+    setInterests([...interests, newInterest]);
+  };
+  const handleInterestChange = (index, value) => {
+    const updatedInterests = [...interests];
+    updatedInterests[index] = value;
+    setInterests(updatedInterests);
+    setFormData({ ...formData, interests: interests });
+  };
 
   const handlePersonalInfoChange = (index, field, value) => {
     const updatedPersonalInfo = [...personalInfo];
@@ -74,6 +95,7 @@ const InputForm = () => {
       [field]: value,
     };
     setPersonalInfo(updatedPersonalInfo);
+    setFormData(...updatedPersonalInfo);
   };
 
   const handleEducationDetailChange = (index, field, value) => {
@@ -83,6 +105,7 @@ const InputForm = () => {
       [field]: value,
     };
     setEducationDetails(updatedEducationDetails);
+    setFormData({ ...formData, education: updatedEducationDetails });
   };
   const handleExperienceChange = (index, field, value) => {
     const updatedExperience = [...experience];
@@ -91,21 +114,13 @@ const InputForm = () => {
       [field]: value,
     };
     setExperience(updatedExperience);
+    setFormData({ ...formData, experience: updatedExperience });
   };
-  const [formData, setFormData] = useState([
-    {
-      personalInfo,
-      educationDetails: [{}],
-      experience: [{}],
-      skills,
-      interests,
-    },
-  ]);
+  const [formData, setFormData] = useState([{ name: "", phone: "" }]);
 
   function submitHandler(e) {
     e.preventDefault();
 
-    setFormData(formData);
     console.log(formData);
     navigate("./resume", { state: formData });
   }
@@ -439,30 +454,59 @@ const InputForm = () => {
 
             <SectionDivider>Skills</SectionDivider>
             <Grid item xs={12} sm={6}>
-              <TextField
-                name="skills"
-                value={skills}
-                variant="outlined"
-                label="Skills"
-                type="text"
-                fullWidth
-                required
-                onChange={(e) => setSkills(e.target.value)}
-              ></TextField>
+              {skills.map((items, index) => {
+                return (
+                  <TextField
+                    mt={2}
+                    key={index}
+                    name="skills"
+                    value={items.skills}
+                    variant="outlined"
+                    label="Skills"
+                    type="text"
+                    fullWidth
+                    required
+                    onChange={(e) => handleSkillChange(index, e.target.value)}
+                  ></TextField>
+                );
+              })}
             </Grid>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              m={5}
+            >
+              <Button onClick={addSkillHandler}>Add Skill +</Button>
+            </Box>
             <SectionDivider>Interests</SectionDivider>
             <Grid item xs={12} sm={6}>
-              <TextField
-                name="interests"
-                value={interests}
-                variant="outlined"
-                label="Interests"
-                type="text"
-                fullWidth
-                required
-                onChange={(e) => setInterests(e.target.value)}
-              ></TextField>
+              {interests.map((items, index) => {
+                return (
+                  <TextField
+                    key={index}
+                    name="interests"
+                    value={items.interests}
+                    variant="outlined"
+                    label="Interests"
+                    type="text"
+                    fullWidth
+                    required
+                    onChange={(e) =>
+                      handleInterestChange(index, e.target.value)
+                    }
+                  ></TextField>
+                );
+              })}
             </Grid>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              m={5}
+            >
+              <Button onClick={addInterestHandler}>Add Interest +</Button>
+            </Box>
           </Grid>
         </CustomCard>
 
