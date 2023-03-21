@@ -19,7 +19,7 @@ const InputForm = () => {
       title: "",
       email: "",
       description: "",
-      image: null,
+      image: "",
       phone: "",
       location: "",
       linkedIn: "",
@@ -36,32 +36,18 @@ const InputForm = () => {
   ]);
 
   const [experience, setExperience] = useState([
-    { role: "", company: "", yearsCompany: "" },
+    {
+      role: "",
+      company: "",
+      yearsCompany: "",
+    },
   ]);
 
   const [skills, setSkills] = useState("");
   const [interests, setInterests] = useState("");
-  const [formData, setFormData] = useState();
+
   const navigate = useNavigate();
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const formData = {};
-
-    setFormData(formData);
-    navigate("./resume", { state: formData });
-  };
-
-  console.log(formData);
-
-  const imageHandler = (event) => {
-    const selectedImage = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(selectedImage);
-    reader.onload = () => {
-      setImage(reader.result);
-    };
-  };
   const addEducationHandler = () => {
     const educationForm = {
       degree: "",
@@ -74,10 +60,20 @@ const InputForm = () => {
   const addExperienceHandler = () => {
     const experienceForm = {
       role: "",
+
       company: "",
       yearsCompany: "",
     };
     setExperience([...experience, experienceForm]);
+  };
+
+  const handlePersonalInfoChange = (index, field, value) => {
+    const updatedPersonalInfo = [...personalInfo];
+    updatedPersonalInfo[index] = {
+      ...updatedPersonalInfo[index],
+      [field]: value,
+    };
+    setPersonalInfo(updatedPersonalInfo);
   };
 
   const handleEducationDetailChange = (index, field, value) => {
@@ -96,6 +92,23 @@ const InputForm = () => {
     };
     setExperience(updatedExperience);
   };
+  const [formData, setFormData] = useState([
+    {
+      personalInfo,
+      educationDetails: [{}],
+      experience: [{}],
+      skills,
+      interests,
+    },
+  ]);
+
+  function submitHandler(e) {
+    e.preventDefault();
+
+    setFormData(formData);
+    console.log(formData);
+    navigate("./resume", { state: formData });
+  }
   return (
     <>
       <Box>
@@ -137,6 +150,9 @@ const InputForm = () => {
                       type="text"
                       fullWidth
                       required
+                      onChange={(e) =>
+                        handlePersonalInfoChange(index, "name", e.target.value)
+                      }
                     ></TextField>
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -149,6 +165,9 @@ const InputForm = () => {
                       type="text"
                       fullWidth
                       required
+                      onChange={(e) =>
+                        handlePersonalInfoChange(index, "title", e.target.value)
+                      }
                     ></TextField>
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -158,7 +177,18 @@ const InputForm = () => {
                       accept="image/*"
                       type="file"
                       id="image"
-                      onChange={imageHandler}
+                      onChange={(event) => {
+                        const selectedImage = event.target.files[0];
+                        const reader = new FileReader();
+                        reader.readAsDataURL(selectedImage);
+                        reader.onload = () => {
+                          handlePersonalInfoChange(
+                            index,
+                            "image",
+                            reader.result
+                          );
+                        };
+                      }}
                     ></Input>
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -172,6 +202,13 @@ const InputForm = () => {
                       multiline
                       fullWidth
                       required
+                      onChange={(e) =>
+                        handlePersonalInfoChange(
+                          index,
+                          "description",
+                          e.target.value
+                        )
+                      }
                     ></TextField>
                   </Grid>
 
@@ -184,6 +221,9 @@ const InputForm = () => {
                       label="Email"
                       fullWidth
                       required
+                      onChange={(e) =>
+                        handlePersonalInfoChange(index, "email", e.target.value)
+                      }
                     ></TextField>
                   </Grid>
 
@@ -196,6 +236,9 @@ const InputForm = () => {
                       type="number"
                       fullWidth
                       required
+                      onChange={(e) =>
+                        handlePersonalInfoChange(index, "phone", e.target.value)
+                      }
                     ></TextField>
                   </Grid>
 
@@ -208,6 +251,13 @@ const InputForm = () => {
                       type="text"
                       fullWidth
                       required
+                      onChange={(e) =>
+                        handlePersonalInfoChange(
+                          index,
+                          "location",
+                          e.target.value
+                        )
+                      }
                     ></TextField>
                   </Grid>
 
@@ -220,6 +270,13 @@ const InputForm = () => {
                       type="text"
                       fullWidth
                       required
+                      onChange={(e) =>
+                        handlePersonalInfoChange(
+                          index,
+                          "linkedIn",
+                          e.target.value
+                        )
+                      }
                     ></TextField>
                   </Grid>
                 </Grid>
