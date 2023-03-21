@@ -74,7 +74,7 @@ const InputForm = () => {
     const updatedSkills = [...skills];
     updatedSkills[index] = value;
     setSkills(updatedSkills);
-    setFormData({ ...formData, skills: updatedSkills });
+    setFormData({ ...formData, skills: skills });
   };
 
   const addInterestHandler = () => {
@@ -116,7 +116,7 @@ const InputForm = () => {
     setExperience(updatedExperience);
     setFormData({ ...formData, experience: updatedExperience });
   };
-  const [formData, setFormData] = useState([{ name: "", phone: "" }]);
+  const [formData, setFormData] = useState([{}]);
 
   function submitHandler(e) {
     e.preventDefault();
@@ -484,6 +484,7 @@ const InputForm = () => {
               {interests.map((items, index) => {
                 return (
                   <TextField
+                    mt={2}
                     key={index}
                     name="interests"
                     value={items.interests}
