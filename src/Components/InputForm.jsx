@@ -13,8 +13,20 @@ import CustomCard from "./UI/CustomCard";
 import SectionDivider from "./UI/SectionDivider";
 import { Stack } from "@mui/system";
 import RemoveIcon from "@mui/icons-material/Remove";
+import SendIcon from "@mui/icons-material/Send";
+import AddIcon from "@mui/icons-material/Add";
 
 const InputForm = () => {
+  const [formData, setFormData] = useState([{}]);
+  const [errorStatement, setErrorStatement] = useState({
+    nameError: "",
+    emailError: "",
+    phoneError: "",
+    linkedInError: "",
+    titleError: "",
+    descriptionError: "",
+    locationError: "",
+  });
   const [personalInfo, setPersonalInfo] = useState([
     {
       name: "",
@@ -96,6 +108,7 @@ const InputForm = () => {
     skills.splice(index, 1);
     setSkills([...skills]);
   };
+
   const removeInterestHandler = (index) => {
     interests.splice(index, 1);
     setInterests([...interests]);
@@ -135,13 +148,11 @@ const InputForm = () => {
     setExperience(updatedExperience);
     setFormData({ ...formData, experience: updatedExperience });
   };
-  const [formData, setFormData] = useState([{}]);
 
   function submitHandler(e) {
     e.preventDefault();
-
-    console.log(formData);
     navigate("./resume", { state: formData });
+    console.log(formData);
   }
   return (
     <>
@@ -174,14 +185,17 @@ const InputForm = () => {
 
             {personalInfo.map((values, index) => {
               return (
-                <Grid container key={index} spacing={3} mt={3} p={4}>
+                <Grid container key={index} spacing={3} p={4}>
                   <Grid item xs={12} sm={4}>
                     <TextField
+                      key={index + "name"}
                       name="name"
                       value={values.name}
                       variant="outlined"
                       label="Name"
                       type="text"
+                      error={!!errorStatement.nameError}
+                      helperText={errorStatement.nameError}
                       fullWidth
                       required
                       onChange={(e) =>
@@ -191,6 +205,7 @@ const InputForm = () => {
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <TextField
+                      key={index + "title"}
                       name="title"
                       id="title"
                       value={values.title}
@@ -207,6 +222,7 @@ const InputForm = () => {
                   <Grid item xs={12} sm={4}>
                     <InputLabel htmlFor="image">Upload your Picture</InputLabel>
                     <Input
+                      key={index + "img"}
                       name="Image"
                       accept="image/*"
                       type="file"
@@ -227,7 +243,7 @@ const InputForm = () => {
                   </Grid>
                   <Grid item xs={12} sm={12}>
                     <TextField
-                      rows={4}
+                      key={index + "de"}
                       name="description"
                       value={values.description}
                       variant="outlined"
@@ -248,6 +264,7 @@ const InputForm = () => {
 
                   <Grid item xs={12} sm={3}>
                     <TextField
+                      key={index + "email"}
                       name="email"
                       value={values.email}
                       type="email"
@@ -263,6 +280,7 @@ const InputForm = () => {
 
                   <Grid item xs={12} sm={3}>
                     <TextField
+                      key={index + "p"}
                       name="phone"
                       variant="outlined"
                       value={values.phone}
@@ -321,11 +339,10 @@ const InputForm = () => {
             {educationDetails.map((values, index) => {
               return (
                 <>
-                  <Typography variant="h6">{`${index + 1}.`}</Typography>
-
-                  <Grid container key={index} spacing={3} mt={3} p={4}>
+                  <Grid container key={index} spacing={3} p={4}>
                     <Grid item xs={12} sm={3}>
                       <TextField
+                        key={index + "degree"}
                         name="degree"
                         variant="outlined"
                         value={values.degree}
@@ -344,6 +361,7 @@ const InputForm = () => {
                     </Grid>
                     <Grid item xs={12} sm={3}>
                       <TextField
+                        key={index + "university"}
                         name="university"
                         variant="outlined"
                         value={values.university}
@@ -362,6 +380,7 @@ const InputForm = () => {
                     </Grid>
                     <Grid item xs={12} sm={2}>
                       <TextField
+                        key={index + "Ye"}
                         name="Year of Enrollment"
                         variant="outlined"
                         value={values.yearEnrolled}
@@ -380,6 +399,7 @@ const InputForm = () => {
                     </Grid>
                     <Grid item xs={12} sm={2}>
                       <TextField
+                        key={index + "yc"}
                         name="Year of Completion"
                         variant="outlined"
                         value={values.yearCompleted}
@@ -396,14 +416,16 @@ const InputForm = () => {
                         }
                       ></TextField>
                     </Grid>
-                    <Grid item xs={12} sm={2}>
-                      <Button
-                        variant="contained"
-                        onClick={removeEducationHandler}
-                      >
-                        <RemoveIcon />
-                      </Button>
-                    </Grid>
+                    {educationDetails.length > 1 && (
+                      <Grid item xs={12} sm={2}>
+                        <Button
+                          variant="contained"
+                          onClick={() => removeEducationHandler(index)}
+                        >
+                          <RemoveIcon />
+                        </Button>
+                      </Grid>
+                    )}
                   </Grid>
                 </>
               );
@@ -415,7 +437,8 @@ const InputForm = () => {
               m={5}
             >
               <Button variant="contained" onClick={addEducationHandler}>
-                Add Education Details +
+                Add Education Details
+                <AddIcon />
               </Button>
             </Box>
 
@@ -423,10 +446,10 @@ const InputForm = () => {
             {experience.map((values, index) => {
               return (
                 <>
-                  <Typography variant="h6">{`${index + 1}.`}</Typography>
-                  <Grid container key={index} m={3} spacing={3} p={4}>
+                  <Grid container key={index} spacing={3} p={2}>
                     <Grid item xs={12} sm={3}>
                       <TextField
+                        key={index + "role"}
                         name="Role"
                         value={values.role}
                         variant="outlined"
@@ -441,6 +464,7 @@ const InputForm = () => {
                     </Grid>
                     <Grid item xs={12} sm={3}>
                       <TextField
+                        key={index + "company"}
                         name="company"
                         value={values.company}
                         variant="outlined"
@@ -459,6 +483,7 @@ const InputForm = () => {
                     </Grid>
                     <Grid item xs={12} sm={3}>
                       <TextField
+                        key={index + "years"}
                         name="Years"
                         value={values.yearsCompany}
                         variant="outlined"
@@ -475,14 +500,16 @@ const InputForm = () => {
                         }
                       ></TextField>
                     </Grid>
-                    <Grid item xs={12} sm={3}>
-                      <Button
-                        variant="contained"
-                        onClick={removeExperienceHandler}
-                      >
-                        <RemoveIcon />
-                      </Button>
-                    </Grid>
+                    {experience.length > 1 && (
+                      <Grid item xs={12} sm={3}>
+                        <Button
+                          variant="contained"
+                          onClick={removeExperienceHandler}
+                        >
+                          <RemoveIcon />
+                        </Button>
+                      </Grid>
+                    )}
                   </Grid>
                 </>
               );
@@ -494,7 +521,8 @@ const InputForm = () => {
               m={5}
             >
               <Button variant="contained" onClick={addExperienceHandler}>
-                Add Experience Details +
+                Add Experience Details
+                <AddIcon />
               </Button>
             </Box>
 
@@ -509,7 +537,7 @@ const InputForm = () => {
                         mt={2}
                         key={index}
                         name="skills"
-                        value={items.skills}
+                        value={items}
                         variant="outlined"
                         label="Skills"
                         type="text"
@@ -519,9 +547,16 @@ const InputForm = () => {
                           handleSkillChange(index, e.target.value)
                         }
                       ></TextField>
-                      <Button variant="contained" onClick={removeSkillHandler}>
-                        <RemoveIcon />
-                      </Button>
+                      {skills.length > 1 && (
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            removeSkillHandler(index);
+                          }}
+                        >
+                          <RemoveIcon />
+                        </Button>
+                      )}
                     </Stack>
                   </Stack>
                 </>
@@ -535,7 +570,8 @@ const InputForm = () => {
               m={5}
             >
               <Button variant="contained" onClick={addSkillHandler}>
-                Add Skill +
+                Add Skill
+                <AddIcon />
               </Button>
             </Box>
             <SectionDivider>Interests</SectionDivider>
@@ -544,12 +580,12 @@ const InputForm = () => {
               return (
                 <>
                   <Stack spacing={3} m={2} ml={2}>
-                    <Stack direction={"row"} spacing={3}>
+                    <Stack direction={"row"}>
                       <TextField
                         mt={2}
                         key={index}
                         name="interests"
-                        value={items.interests}
+                        value={items}
                         variant="outlined"
                         label="Interests"
                         type="text"
@@ -559,13 +595,16 @@ const InputForm = () => {
                           handleInterestChange(index, e.target.value)
                         }
                       ></TextField>
-
-                      <Button
-                        variant="contained"
-                        onClick={removeInterestHandler}
-                      >
-                        <RemoveIcon />
-                      </Button>
+                      {interests.length > 1 && (
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            removeInterestHandler(index);
+                          }}
+                        >
+                          <RemoveIcon />
+                        </Button>
+                      )}
                     </Stack>
                   </Stack>
                 </>
@@ -579,7 +618,8 @@ const InputForm = () => {
               m={5}
             >
               <Button variant="contained" onClick={addInterestHandler}>
-                Add Interest +
+                Add Interest
+                <AddIcon />
               </Button>
             </Box>
           </Grid>
@@ -599,7 +639,8 @@ const InputForm = () => {
             onClick={submitHandler}
           >
             <Typography variant="h6" fontWeight="bold">
-              Generate your CV
+              Generate CV
+              <SendIcon />
             </Typography>
           </Button>
         </Box>

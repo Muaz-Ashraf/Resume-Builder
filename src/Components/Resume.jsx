@@ -145,13 +145,14 @@ const Resume = () => {
             <Typography variant="h4" fontWeight="bold" mb={3} mt={3}>
               SKILLS
             </Typography>
-            <Stack mt={3} direction={"row"}>
+            <Stack mt={3} direction={{ xs: "column", sm: "row" }} xs={4} sm={3}>
               {formData.skills.map((items, index) => {
                 return (
                   <Typography
                     key={index + 1}
                     variant="h6"
                     textAlign="center"
+                    whiteSpace={"nowrap"}
                     sx={{
                       border: "1px solid black",
                       borderRadius: "0.5em",
@@ -169,13 +170,14 @@ const Resume = () => {
             <Typography variant="h4" fontWeight="bold" mt={3}>
               INTERESTS
             </Typography>
-            <Stack mt={10} direction={"row"} m="0.4em">
+            <Stack mt={10} direction={{ xs: "column", sm: "row" }} m="0.4em">
               {formData.interests.map((items, index) => {
                 return (
                   <Typography
                     key={index + 2}
                     variant="h6"
                     textAlign="center"
+                    whiteSpace={"nowrap"}
                     sx={{
                       border: "1px solid black",
                       borderRadius: "0.5em",
