@@ -98,44 +98,98 @@ const Resume = () => {
         </Stack>
         <Grid container spacing={1}>
           <Grid item xs={6} sm={6}>
-            <Stack mt={3}>
+            <Stack mt={3} key={"1"}>
               <Typography variant="h4" fontWeight="bold" mb={3}>
                 EDUCATION
               </Typography>
-              <Typography variant="h6" fontWeight="bold">
-                {formData.degree}
-              </Typography>
-              <Typography variant="h6">{formData.university}</Typography>
-              <Typography variant="body1">
-                {formData.yearEnrolled} - {formData.yearCompleted}
-              </Typography>
+              {formData.education.map((item, index) => {
+                return (
+                  <>
+                    <Typography variant="h6" fontWeight="bold" key={index + 3}>
+                      {item.degree}
+                    </Typography>
+                    <Typography variant="h6" key={index + 4}>
+                      {item.university}
+                    </Typography>
+                    <Typography variant="body1" key={index + 5}>
+                      {item.yearEnrolled} - {item.yearCompleted}
+                    </Typography>
+                  </>
+                );
+              })}
             </Stack>
-            <Stack mt={10}>
+            <Stack mt={10} key={"2"}>
               <Typography variant="h4" fontWeight="bold" mb={3}>
                 WORK EXPERIENCE
               </Typography>
-              <Typography variant="h6" fontWeight="bold">
-                {formData.role}
-              </Typography>
-              <Typography variant="h6">{formData.company}</Typography>
-              <Typography variant="h6">
-                {formData.yearsCompany} years
-              </Typography>
+
+              {formData.experience.map((item, index) => {
+                return (
+                  <>
+                    <Typography variant="h6" fontWeight="bold" key={index + 6}>
+                      {item.role}
+                    </Typography>
+                    <Typography variant="h6" key={index + 7}>
+                      {item.company}
+                    </Typography>
+                    <Typography variant="h6" key={index + 8}>
+                      {item.yearsCompany} years
+                    </Typography>
+                  </>
+                );
+              })}
             </Stack>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <Stack mt={3}>
-              <Typography variant="h4" fontWeight="bold" mb={3}>
-                SKILLS
-              </Typography>
-              <Typography variant="h6">{formData.skills}</Typography>
+          <Grid item xs={12} sm={2}>
+            <Typography variant="h4" fontWeight="bold" mb={3} mt={3}>
+              SKILLS
+            </Typography>
+            <Stack mt={3} direction={{ xs: "column", sm: "row" }} xs={4} sm={3}>
+              {formData.skills.map((items, index) => {
+                return (
+                  <Typography
+                    key={index + 1}
+                    variant="h6"
+                    textAlign="center"
+                    whiteSpace={"nowrap"}
+                    sx={{
+                      border: "1px solid black",
+                      borderRadius: "0.5em",
+                      padding: "0.4em",
+                      bgcolor: "royalblue",
+                      color: "white",
+                      margin: "0.2em",
+                    }}
+                  >
+                    {items}
+                  </Typography>
+                );
+              })}
             </Stack>
-            <Stack mt={10}>
-              <Typography variant="h4" fontWeight="bold" mb={3}>
-                INTERESTS
-              </Typography>
-              <Typography variant="h6">{formData.interests}</Typography>
+            <Typography variant="h4" fontWeight="bold" mt={3}>
+              INTERESTS
+            </Typography>
+            <Stack mt={10} direction={{ xs: "column", sm: "row" }} m="0.4em">
+              {formData.interests.map((items, index) => {
+                return (
+                  <Typography
+                    key={index + 2}
+                    variant="h6"
+                    textAlign="center"
+                    whiteSpace={"nowrap"}
+                    sx={{
+                      border: "1px solid black",
+                      borderRadius: "0.5em",
+                      padding: "0.4em",
+
+                      margin: "0.2em",
+                    }}
+                  >
+                    {items}
+                  </Typography>
+                );
+              })}
             </Stack>
           </Grid>
         </Grid>
