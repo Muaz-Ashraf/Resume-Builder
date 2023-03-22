@@ -11,6 +11,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import CustomCard from "./UI/CustomCard";
 import SectionDivider from "./UI/SectionDivider";
+import { Stack } from "@mui/system";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 const InputForm = () => {
   const [personalInfo, setPersonalInfo] = useState([
@@ -43,8 +45,8 @@ const InputForm = () => {
     },
   ]);
 
-  const [skills, setSkills] = useState([]);
-  const [interests, setInterests] = useState([]);
+  const [skills, setSkills] = useState([""]);
+  const [interests, setInterests] = useState([""]);
 
   const navigate = useNavigate();
 
@@ -66,6 +68,7 @@ const InputForm = () => {
     };
     setExperience([...experience, experienceForm]);
   };
+
   const addSkillHandler = () => {
     const newSkill = "";
     setSkills([...skills, newSkill]);
@@ -80,6 +83,22 @@ const InputForm = () => {
   const addInterestHandler = () => {
     const newInterest = "";
     setInterests([...interests, newInterest]);
+  };
+  const removeEducationHandler = (index) => {
+    educationDetails.splice(index, 1);
+    setEducationDetails([...educationDetails]);
+  };
+  const removeExperienceHandler = (index) => {
+    experience.splice(index, 1);
+    setExperience([...experience]);
+  };
+  const removeSkillHandler = (index) => {
+    skills.splice(index, 1);
+    setSkills([...skills]);
+  };
+  const removeInterestHandler = (index) => {
+    interests.splice(index, 1);
+    setInterests([...interests]);
   };
   const handleInterestChange = (index, value) => {
     const updatedInterests = [...interests];
@@ -156,7 +175,7 @@ const InputForm = () => {
             {personalInfo.map((values, index) => {
               return (
                 <Grid container key={index} spacing={3} mt={3} p={4}>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={4}>
                     <TextField
                       name="name"
                       value={values.name}
@@ -170,7 +189,7 @@ const InputForm = () => {
                       }
                     ></TextField>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={4}>
                     <TextField
                       name="title"
                       id="title"
@@ -185,7 +204,7 @@ const InputForm = () => {
                       }
                     ></TextField>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={4}>
                     <InputLabel htmlFor="image">Upload your Picture</InputLabel>
                     <Input
                       name="Image"
@@ -206,7 +225,7 @@ const InputForm = () => {
                       }}
                     ></Input>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={12}>
                     <TextField
                       rows={4}
                       name="description"
@@ -227,7 +246,7 @@ const InputForm = () => {
                     ></TextField>
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={3}>
                     <TextField
                       name="email"
                       value={values.email}
@@ -242,7 +261,7 @@ const InputForm = () => {
                     ></TextField>
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={3}>
                     <TextField
                       name="phone"
                       variant="outlined"
@@ -257,7 +276,7 @@ const InputForm = () => {
                     ></TextField>
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={3}>
                     <TextField
                       name="location"
                       variant="outlined"
@@ -276,7 +295,7 @@ const InputForm = () => {
                     ></TextField>
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={3}>
                     <TextField
                       name="LinkedIn"
                       variant="outlined"
@@ -301,80 +320,92 @@ const InputForm = () => {
 
             {educationDetails.map((values, index) => {
               return (
-                <Grid container key={index} spacing={3} mt={3} p={4}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      name="degree"
-                      variant="outlined"
-                      value={values.degree}
-                      label="Degree"
-                      type="text"
-                      fullWidth
-                      required
-                      onChange={(e) =>
-                        handleEducationDetailChange(
-                          index,
-                          "degree",
-                          e.target.value
-                        )
-                      }
-                    ></TextField>
+                <>
+                  <Typography variant="h6">{`${index + 1}.`}</Typography>
+
+                  <Grid container key={index} spacing={3} mt={3} p={4}>
+                    <Grid item xs={12} sm={3}>
+                      <TextField
+                        name="degree"
+                        variant="outlined"
+                        value={values.degree}
+                        label="Degree"
+                        type="text"
+                        fullWidth
+                        required
+                        onChange={(e) =>
+                          handleEducationDetailChange(
+                            index,
+                            "degree",
+                            e.target.value
+                          )
+                        }
+                      ></TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                      <TextField
+                        name="university"
+                        variant="outlined"
+                        value={values.university}
+                        label="University"
+                        type="text"
+                        fullWidth
+                        required
+                        onChange={(e) =>
+                          handleEducationDetailChange(
+                            index,
+                            "university",
+                            e.target.value
+                          )
+                        }
+                      ></TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={2}>
+                      <TextField
+                        name="Year of Enrollment"
+                        variant="outlined"
+                        value={values.yearEnrolled}
+                        label="Year of Enrollment"
+                        type="number"
+                        fullWidth
+                        required
+                        onChange={(e) =>
+                          handleEducationDetailChange(
+                            index,
+                            "yearEnrolled",
+                            e.target.value
+                          )
+                        }
+                      ></TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={2}>
+                      <TextField
+                        name="Year of Completion"
+                        variant="outlined"
+                        value={values.yearCompleted}
+                        label="Year of Completion"
+                        type="number"
+                        fullWidth
+                        required
+                        onChange={(e) =>
+                          handleEducationDetailChange(
+                            index,
+                            "yearCompleted",
+                            e.target.value
+                          )
+                        }
+                      ></TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={2}>
+                      <Button
+                        variant="contained"
+                        onClick={removeEducationHandler}
+                      >
+                        <RemoveIcon />
+                      </Button>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      name="university"
-                      variant="outlined"
-                      value={values.university}
-                      label="University"
-                      type="text"
-                      fullWidth
-                      required
-                      onChange={(e) =>
-                        handleEducationDetailChange(
-                          index,
-                          "university",
-                          e.target.value
-                        )
-                      }
-                    ></TextField>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      name="Year of Enrollment"
-                      variant="outlined"
-                      value={values.yearEnrolled}
-                      label="Year of Enrollment"
-                      type="number"
-                      fullWidth
-                      required
-                      onChange={(e) =>
-                        handleEducationDetailChange(
-                          index,
-                          "yearEnrolled",
-                          e.target.value
-                        )
-                      }
-                    ></TextField>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      name="Year of Completion"
-                      variant="outlined"
-                      value={values.yearCompleted}
-                      label="Year of Completion"
-                      type="number"
-                      fullWidth
-                      required
-                      onChange={(e) =>
-                        handleEducationDetailChange(
-                          index,
-                          "yearCompleted",
-                          e.target.value
-                        )
-                      }
-                    ></TextField>
-                  </Grid>
-                </Grid>
+                </>
               );
             })}
             <Box
@@ -383,7 +414,7 @@ const InputForm = () => {
               alignItems="center"
               m={5}
             >
-              <Button onClick={addEducationHandler}>
+              <Button variant="contained" onClick={addEducationHandler}>
                 Add Education Details +
               </Button>
             </Box>
@@ -391,54 +422,69 @@ const InputForm = () => {
             <SectionDivider>Professional Experience</SectionDivider>
             {experience.map((values, index) => {
               return (
-                <Grid container key={index} spacing={3} mt={3} p={4}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      name="Role"
-                      value={values.role}
-                      variant="outlined"
-                      label="Role"
-                      type="text"
-                      fullWidth
-                      required
-                      onChange={(e) =>
-                        handleExperienceChange(index, "role", e.target.value)
-                      }
-                    ></TextField>
+                <>
+                  <Typography variant="h6">{`${index + 1}.`}</Typography>
+                  <Grid container key={index} m={3} spacing={3} p={4}>
+                    <Grid item xs={12} sm={3}>
+                      <TextField
+                        name="Role"
+                        value={values.role}
+                        variant="outlined"
+                        label="Role"
+                        type="text"
+                        fullWidth
+                        required
+                        onChange={(e) =>
+                          handleExperienceChange(index, "role", e.target.value)
+                        }
+                      ></TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                      <TextField
+                        name="company"
+                        value={values.company}
+                        variant="outlined"
+                        label="Company Name"
+                        type="text"
+                        fullWidth
+                        required
+                        onChange={(e) =>
+                          handleExperienceChange(
+                            index,
+                            "company",
+                            e.target.value
+                          )
+                        }
+                      ></TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                      <TextField
+                        name="Years"
+                        value={values.yearsCompany}
+                        variant="outlined"
+                        label="Years of Experience"
+                        type="number"
+                        fullWidth
+                        required
+                        onChange={(e) =>
+                          handleExperienceChange(
+                            index,
+                            "yearsCompany",
+                            e.target.value
+                          )
+                        }
+                      ></TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                      <Button
+                        variant="contained"
+                        onClick={removeExperienceHandler}
+                      >
+                        <RemoveIcon />
+                      </Button>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      name="company"
-                      value={values.company}
-                      variant="outlined"
-                      label="Company Name"
-                      type="text"
-                      fullWidth
-                      required
-                      onChange={(e) =>
-                        handleExperienceChange(index, "company", e.target.value)
-                      }
-                    ></TextField>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      name="Years"
-                      value={values.yearsCompany}
-                      variant="outlined"
-                      label="Years of Experience"
-                      type="number"
-                      fullWidth
-                      required
-                      onChange={(e) =>
-                        handleExperienceChange(
-                          index,
-                          "yearsCompany",
-                          e.target.value
-                        )
-                      }
-                    ></TextField>
-                  </Grid>
-                </Grid>
+                </>
               );
             })}
             <Box
@@ -447,66 +493,94 @@ const InputForm = () => {
               alignItems="center"
               m={5}
             >
-              <Button onClick={addExperienceHandler}>
+              <Button variant="contained" onClick={addExperienceHandler}>
                 Add Experience Details +
               </Button>
             </Box>
 
             <SectionDivider>Skills</SectionDivider>
-            <Grid item xs={12} sm={6}>
-              {skills.map((items, index) => {
-                return (
-                  <TextField
-                    mt={2}
-                    key={index}
-                    name="skills"
-                    value={items.skills}
-                    variant="outlined"
-                    label="Skills"
-                    type="text"
-                    fullWidth
-                    required
-                    onChange={(e) => handleSkillChange(index, e.target.value)}
-                  ></TextField>
-                );
-              })}
-            </Grid>
+
+            {skills.map((items, index) => {
+              return (
+                <>
+                  <Stack spacing={3} m={2} ml={2}>
+                    <Stack direction={"row"}>
+                      <TextField
+                        mt={2}
+                        key={index}
+                        name="skills"
+                        value={items.skills}
+                        variant="outlined"
+                        label="Skills"
+                        type="text"
+                        fullWidth
+                        required
+                        onChange={(e) =>
+                          handleSkillChange(index, e.target.value)
+                        }
+                      ></TextField>
+                      <Button variant="contained" onClick={removeSkillHandler}>
+                        <RemoveIcon />
+                      </Button>
+                    </Stack>
+                  </Stack>
+                </>
+              );
+            })}
+
             <Box
               display="flex"
               justifyContent="center"
               alignItems="center"
               m={5}
             >
-              <Button onClick={addSkillHandler}>Add Skill +</Button>
+              <Button variant="contained" onClick={addSkillHandler}>
+                Add Skill +
+              </Button>
             </Box>
             <SectionDivider>Interests</SectionDivider>
-            <Grid item xs={12} sm={6}>
-              {interests.map((items, index) => {
-                return (
-                  <TextField
-                    mt={2}
-                    key={index}
-                    name="interests"
-                    value={items.interests}
-                    variant="outlined"
-                    label="Interests"
-                    type="text"
-                    fullWidth
-                    required
-                    onChange={(e) =>
-                      handleInterestChange(index, e.target.value)
-                    }
-                  ></TextField>
-                );
-              })}
-            </Grid>
+
+            {interests.map((items, index) => {
+              return (
+                <>
+                  <Stack spacing={3} m={2} ml={2}>
+                    <Stack direction={"row"} spacing={3}>
+                      <TextField
+                        mt={2}
+                        key={index}
+                        name="interests"
+                        value={items.interests}
+                        variant="outlined"
+                        label="Interests"
+                        type="text"
+                        fullWidth
+                        required
+                        onChange={(e) =>
+                          handleInterestChange(index, e.target.value)
+                        }
+                      ></TextField>
+
+                      <Button
+                        variant="contained"
+                        onClick={removeInterestHandler}
+                      >
+                        <RemoveIcon />
+                      </Button>
+                    </Stack>
+                  </Stack>
+                </>
+              );
+            })}
+
             <Box
               display="flex"
               justifyContent="center"
               alignItems="center"
               m={5}
             >
-              <Button onClick={addInterestHandler}>Add Interest +</Button>
+              <Button variant="contained" onClick={addInterestHandler}>
+                Add Interest +
+              </Button>
             </Box>
           </Grid>
         </CustomCard>
