@@ -148,10 +148,73 @@ const InputForm = () => {
     setExperience(updatedExperience);
     setFormData({ ...formData, experience: updatedExperience });
   };
+  function validationHandler(e) {
+    const nameRegex = /^[a-zA-Z]+ [a-zA-Z]+$/;
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    console.log(e);
+
+    if (e.target.id === "name") {
+      if (e.target.value === "") {
+        setErrorStatement({ nameError: "Please Enter a Name" });
+      } else if (e.target.value.length < 2) {
+        setErrorStatement({
+          nameError: "Name should be more than one character",
+        });
+      } else if (!regex.test(e.target.value)) {
+        setErrorStatement({
+          nameError: "Name should not contain special characters or numbers",
+        });
+      } else {
+        setErrorStatement({ nameError: "" });
+      }
+    }
+    if (e.target.id === "title") {
+      if (e.target.value === "") {
+        setErrorStatement({ titleError: "Please enter a Title" });
+      }
+    }
+    if (e.target.id === "description") {
+      if (e.target.value === "") {
+        setErrorStatement({
+          descriptionError: "Please enter a brief description",
+        });
+      }
+    }
+    if (e.target.id === "phone") {
+      if (e.target.value === "") {
+        setErrorStatement({ phoneError: "Please enter a Phone Number" });
+      } else if (e.target.value < 11) {
+        setErrorStatement({ phoneError: "Must be at least 11 digits" });
+      }
+    }
+    if (e.target.id === "email") {
+      if (e.target.value === "") {
+        setErrorStatement({ emailError: "Please enter your Email" });
+      } else if (!emailRegex.test(e.target.value)) {
+        setErrorStatement({ emailError: "Please enter a valid Email" });
+      }
+    }
+    if (e.target.id === "linkedIn") {
+      if (e.target.value === "") {
+        setErrorStatement({ linkedInError: "Please enter your linkedIn url" });
+      }
+    }
+    if (e.target.id === "location") {
+      if (e.target.value === "") {
+        setErrorStatement({ locationError: "Please enter your location" });
+      }
+    }
+  }
 
   function submitHandler(e) {
     e.preventDefault();
-    navigate("./resume", { state: formData });
+    if (formData.name === "") {
+      setErrorStatement({ nameError: "Name is required" });
+    } else {
+      setErrorStatement({ nameError: "" });
+      navigate("./resume", { state: formData });
+    }
+
     console.log(formData);
   }
   return (
@@ -189,6 +252,7 @@ const InputForm = () => {
                   <Grid item xs={12} sm={4}>
                     <TextField
                       key={index + "name"}
+                      id="name"
                       name="name"
                       value={values.name}
                       variant="outlined"
@@ -196,6 +260,7 @@ const InputForm = () => {
                       type="text"
                       error={!!errorStatement.nameError}
                       helperText={errorStatement.nameError}
+                      onBlur={(e) => validationHandler(e)}
                       fullWidth
                       required
                       onChange={(e) =>
@@ -212,8 +277,11 @@ const InputForm = () => {
                       variant="outlined"
                       label="Title"
                       type="text"
+                      error={!!errorStatement.titleError}
+                      helperText={errorStatement.titleError}
                       fullWidth
                       required
+                      onBlur={(e) => validationHandler(e)}
                       onChange={(e) =>
                         handlePersonalInfoChange(index, "title", e.target.value)
                       }
@@ -244,14 +312,18 @@ const InputForm = () => {
                   <Grid item xs={12} sm={12}>
                     <TextField
                       key={index + "de"}
+                      id="description"
                       name="description"
                       value={values.description}
+                      error={!!errorStatement.descriptionError}
+                      helperText={errorStatement.descriptionError}
                       variant="outlined"
                       label={"Describe yourself and your achievements briefly"}
                       type="text"
                       multiline
                       fullWidth
                       required
+                      onBlur={(e) => validationHandler(e)}
                       onChange={(e) =>
                         handlePersonalInfoChange(
                           index,
@@ -266,12 +338,18 @@ const InputForm = () => {
                     <TextField
                       key={index + "email"}
                       name="email"
+                      id="email"
                       value={values.email}
+                      error={!!errorStatement.emailError}
+                      helperText={errorStatement.emailError}
                       type="email"
                       variant="outlined"
                       label="Email"
                       fullWidth
                       required
+                      onBlur={(e) => {
+                        validationHandler(e);
+                      }}
                       onChange={(e) =>
                         handlePersonalInfoChange(index, "email", e.target.value)
                       }
@@ -282,12 +360,18 @@ const InputForm = () => {
                     <TextField
                       key={index + "p"}
                       name="phone"
+                      id="phone"
                       variant="outlined"
                       value={values.phone}
+                      error={!!errorStatement.phoneError}
+                      helperText={errorStatement.phoneError}
                       label="Phone Number"
                       type="number"
                       fullWidth
                       required
+                      onBlur={(e) => {
+                        validationHandler(e);
+                      }}
                       onChange={(e) =>
                         handlePersonalInfoChange(index, "phone", e.target.value)
                       }
@@ -297,12 +381,18 @@ const InputForm = () => {
                   <Grid item xs={12} sm={3}>
                     <TextField
                       name="location"
+                      id="location"
                       variant="outlined"
                       label="Location"
                       value={values.location}
+                      error={!!errorStatement.locationError}
+                      helperText={errorStatement.locationError}
                       type="text"
                       fullWidth
                       required
+                      onBlur={(e) => {
+                        validationHandler(e);
+                      }}
                       onChange={(e) =>
                         handlePersonalInfoChange(
                           index,
@@ -316,12 +406,18 @@ const InputForm = () => {
                   <Grid item xs={12} sm={3}>
                     <TextField
                       name="LinkedIn"
+                      id="linkedIn"
                       variant="outlined"
                       label="LinkedIn ID url"
                       value={values.linkedIn}
+                      error={!!errorStatement.linkedInError}
+                      helperText={errorStatement.linkedInError}
                       type="text"
                       fullWidth
                       required
+                      onBlur={(e) => {
+                        validationHandler(e);
+                      }}
                       onChange={(e) =>
                         handlePersonalInfoChange(
                           index,
