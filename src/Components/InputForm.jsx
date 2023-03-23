@@ -26,6 +26,10 @@ const InputForm = () => {
     titleError: "",
     descriptionError: "",
     locationError: "",
+    educationError: "",
+    experienceError: "",
+    skillsError: "",
+    interestsError: "",
   });
   const [personalInfo, setPersonalInfo] = useState([
     {
@@ -160,7 +164,7 @@ const InputForm = () => {
         setErrorStatement({
           nameError: "Name should be more than one character",
         });
-      } else if (!regex.test(e.target.value)) {
+      } else if (!nameRegex.test(e.target.value)) {
         setErrorStatement({
           nameError: "Name should not contain special characters or numbers",
         });
@@ -183,7 +187,7 @@ const InputForm = () => {
     if (e.target.id === "phone") {
       if (e.target.value === "") {
         setErrorStatement({ phoneError: "Please enter a Phone Number" });
-      } else if (e.target.value < 11) {
+      } else if (e.target.value.length < 11) {
         setErrorStatement({ phoneError: "Must be at least 11 digits" });
       }
     }
@@ -208,15 +212,50 @@ const InputForm = () => {
 
   function submitHandler(e) {
     e.preventDefault();
-    if (formData.name === "") {
-      setErrorStatement({ nameError: "Name is required" });
-    } else {
-      setErrorStatement({ nameError: "" });
-      navigate("./resume", { state: formData });
+    const { name, title, phone, linkedIn, description, email, location } =
+      formData;
+    const errors = {};
+
+    if (!name) {
+      errors.nameError = "Name is required";
     }
 
+    if (!title) {
+      errors.titleError = "Title is required";
+    }
+
+    if (!phone) {
+      errors.phoneError = "Phone number is required";
+    }
+
+    if (!linkedIn) {
+      errors.linkedInError = "LinkedIn URL is required";
+    }
+
+    if (!description) {
+      errors.descriptionError = "Description is required";
+    }
+
+    if (!email) {
+      errors.emailError = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      errors.emailError = "Invalid email address";
+    }
+
+    if (!location) {
+      errors.locationError = "Location is required";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setErrorStatement(errors);
+      return;
+    } else {
+      setErrorStatement({});
+    }
+    navigate("./resume", { state: formData });
     console.log(formData);
   }
+
   return (
     <>
       <Box>
@@ -435,7 +474,7 @@ const InputForm = () => {
             {educationDetails.map((values, index) => {
               return (
                 <>
-                  <Grid container key={index} spacing={3} p={4}>
+                  <Grid container key={index} spacing={3} ml={0.5} p={1.5}>
                     <Grid item xs={12} sm={3}>
                       <TextField
                         key={index + "degree"}
@@ -542,7 +581,7 @@ const InputForm = () => {
             {experience.map((values, index) => {
               return (
                 <>
-                  <Grid container key={index} spacing={3} p={2}>
+                  <Grid container key={index} spacing={3} ml={1} p={1.5}>
                     <Grid item xs={12} sm={3}>
                       <TextField
                         key={index + "role"}
@@ -627,7 +666,7 @@ const InputForm = () => {
             {skills.map((items, index) => {
               return (
                 <>
-                  <Stack spacing={3} m={2} ml={2}>
+                  <Stack spacing={3} m={2} ml={2} pl={2}>
                     <Stack direction={"row"}>
                       <TextField
                         mt={2}
@@ -675,7 +714,7 @@ const InputForm = () => {
             {interests.map((items, index) => {
               return (
                 <>
-                  <Stack spacing={3} m={2} ml={2}>
+                  <Stack spacing={3} m={2} ml={2} pl={2}>
                     <Stack direction={"row"}>
                       <TextField
                         mt={2}
@@ -725,6 +764,7 @@ const InputForm = () => {
           <Button
             variant="contained"
             color="success"
+            type="submit"
             sx={{
               padding: 3,
 
