@@ -130,6 +130,7 @@ const Resume = () => {
                       fontWeight="bold"
                       key={index + 3}
                       fontFamily={"Ubuntu"}
+                      mt={3}
                     >
                       {item.degree}
                     </Typography>
@@ -152,7 +153,7 @@ const Resume = () => {
                 );
               })}
             </Stack>
-            <Stack mt={2} key={"2"}>
+            <Stack mt={5} key={"2"}>
               <Typography
                 variant="h4"
                 fontWeight="bold"
@@ -170,6 +171,7 @@ const Resume = () => {
                       fontWeight="bold"
                       key={index + 6}
                       fontFamily={"Ubuntu"}
+                      mt={3}
                     >
                       {item.role}
                     </Typography>
@@ -181,7 +183,8 @@ const Resume = () => {
                       {item.company}
                     </Typography>
                     <Typography
-                      variant="h6"
+                      variant="body1"
+                      fontStyle="italic"
                       key={index + 8}
                       fontFamily={"Ubuntu"}
                     >
