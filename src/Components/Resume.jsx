@@ -203,7 +203,11 @@ const Resume = () => {
             >
               SKILLS
             </Typography>
-            <Stack mt={3} direction={{ xs: "column", sm: "row" }} xs={4} sm={3}>
+            <Stack
+              mt={3}
+              direction={{ xs: "column", sm: "row" }}
+              flexWrap="wrap"
+            >
               {formData.skills.map((items, index) => {
                 return (
                   <Typography
@@ -235,7 +239,11 @@ const Resume = () => {
             >
               INTERESTS
             </Typography>
-            <Stack mt={10} direction={{ xs: "column", sm: "row" }} m="0.4em">
+            <Stack
+              mt={3}
+              direction={{ xs: "column", sm: "row" }}
+              flexWrap="wrap"
+            >
               {formData.interests.map((items, index) => {
                 return (
                   <Typography
