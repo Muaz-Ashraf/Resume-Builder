@@ -272,12 +272,12 @@ const InputForm = () => {
     <>
       <Box>
         <Typography
-          variant="h1"
+          variant="h2"
           textAlign="center"
+          fontWeight={"bold"}
           mt={3}
           sx={{
-            fontFamily: "Palatino",
-            color: "red",
+            fontFamily: "Verdana",
           }}
         >
           Resume Builder
