@@ -13,7 +13,7 @@ const Resume = () => {
   const formData = location.state;
   return (
     <>
-      <CustomCard>
+      <Box m={3}>
         <Stack
           direction={{ xs: "column", sm: "row" }}
           divider={<Divider orientation="vertical" flexItem />}
@@ -32,7 +32,7 @@ const Resume = () => {
             }}
           />
 
-          <Stack ml={5}>
+          <Stack>
             <Typography
               variant="h3"
               sx={{
@@ -96,10 +96,10 @@ const Resume = () => {
             <Typography variant="h6">{formData.linkedIn}</Typography>
           </Stack>
         </Stack>
-        <Grid container spacing={1}>
+        <Grid container>
           <Grid item xs={6} sm={6}>
             <Stack mt={3} key={"1"}>
-              <Typography variant="h4" fontWeight="bold" mb={3}>
+              <Typography variant="h4" fontWeight="bold">
                 EDUCATION
               </Typography>
               {formData.education.map((item, index) => {
@@ -118,8 +118,8 @@ const Resume = () => {
                 );
               })}
             </Stack>
-            <Stack mt={10} key={"2"}>
-              <Typography variant="h4" fontWeight="bold" mb={3}>
+            <Stack mt={2} key={"2"}>
+              <Typography variant="h4" fontWeight="bold">
                 WORK EXPERIENCE
               </Typography>
 
@@ -141,7 +141,7 @@ const Resume = () => {
             </Stack>
           </Grid>
 
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h4" fontWeight="bold" mb={3} mt={3}>
               SKILLS
             </Typography>
@@ -193,7 +193,7 @@ const Resume = () => {
             </Stack>
           </Grid>
         </Grid>
-      </CustomCard>
+      </Box>
     </>
   );
 };

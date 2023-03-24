@@ -26,10 +26,10 @@ const InputForm = () => {
     titleError: "",
     descriptionError: "",
     locationError: "",
-    educationError: "",
-    experienceError: "",
-    skillsError: "",
-    interestsError: "",
+    // educationError: "",
+    // experienceError: "",
+    // skillsError: "",
+    // interestsError: "",
   });
   const [personalInfo, setPersonalInfo] = useState([
     {
@@ -93,7 +93,7 @@ const InputForm = () => {
     const updatedSkills = [...skills];
     updatedSkills[index] = value;
     setSkills(updatedSkills);
-    setFormData({ ...formData, skills: skills });
+    setFormData({ ...formData, skills: updatedSkills });
   };
 
   const addInterestHandler = () => {
@@ -110,18 +110,18 @@ const InputForm = () => {
   };
   const removeSkillHandler = (index) => {
     skills.splice(index, 1);
-    setSkills([...skills]);
+    setSkills([skills]);
   };
 
   const removeInterestHandler = (index) => {
     interests.splice(index, 1);
-    setInterests([...interests]);
+    setInterests([interests]);
   };
   const handleInterestChange = (index, value) => {
     const updatedInterests = [...interests];
     updatedInterests[index] = value;
     setInterests(updatedInterests);
-    setFormData({ ...formData, interests: interests });
+    setFormData({ ...formData, interests: updatedInterests });
   };
 
   const handlePersonalInfoChange = (index, field, value) => {
@@ -155,7 +155,6 @@ const InputForm = () => {
   function validationHandler(e) {
     const nameRegex = /^[a-zA-Z]+ [a-zA-Z]+$/;
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    console.log(e);
 
     if (e.target.id === "name") {
       if (e.target.value === "") {
@@ -175,6 +174,8 @@ const InputForm = () => {
     if (e.target.id === "title") {
       if (e.target.value === "") {
         setErrorStatement({ titleError: "Please enter a Title" });
+      } else {
+        setErrorStatement({});
       }
     }
     if (e.target.id === "description") {
@@ -182,6 +183,8 @@ const InputForm = () => {
         setErrorStatement({
           descriptionError: "Please enter a brief description",
         });
+      } else {
+        setErrorStatement({});
       }
     }
     if (e.target.id === "phone") {
@@ -189,6 +192,8 @@ const InputForm = () => {
         setErrorStatement({ phoneError: "Please enter a Phone Number" });
       } else if (e.target.value.length < 11) {
         setErrorStatement({ phoneError: "Must be at least 11 digits" });
+      } else {
+        setErrorStatement({});
       }
     }
     if (e.target.id === "email") {
@@ -196,20 +201,26 @@ const InputForm = () => {
         setErrorStatement({ emailError: "Please enter your Email" });
       } else if (!emailRegex.test(e.target.value)) {
         setErrorStatement({ emailError: "Please enter a valid Email" });
+      } else {
+        setErrorStatement({});
       }
     }
     if (e.target.id === "linkedIn") {
       if (e.target.value === "") {
         setErrorStatement({ linkedInError: "Please enter your linkedIn url" });
+        console.log(errorStatement);
+      } else {
+        setErrorStatement({});
       }
     }
     if (e.target.id === "location") {
       if (e.target.value === "") {
         setErrorStatement({ locationError: "Please enter your location" });
+      } else {
+        setErrorStatement({});
       }
     }
   }
-
   function submitHandler(e) {
     e.preventDefault();
     const { name, title, phone, linkedIn, description, email, location } =
@@ -252,6 +263,7 @@ const InputForm = () => {
     } else {
       setErrorStatement({});
     }
+
     navigate("./resume", { state: formData });
     console.log(formData);
   }
