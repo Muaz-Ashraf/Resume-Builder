@@ -110,12 +110,12 @@ const InputForm = () => {
   };
   const removeSkillHandler = (index) => {
     skills.splice(index, 1);
-    setSkills([skills]);
+    setSkills([...skills]);
   };
 
   const removeInterestHandler = (index) => {
     interests.splice(index, 1);
-    setInterests([interests]);
+    setInterests([...interests]);
   };
   const handleInterestChange = (index, value) => {
     const updatedInterests = [...interests];
