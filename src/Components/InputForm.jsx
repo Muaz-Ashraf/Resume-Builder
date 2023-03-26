@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Box,
   Button,
+  Divider,
   Grid,
   Input,
   InputLabel,
@@ -62,6 +63,8 @@ const InputForm = () => {
   ]);
 
   const [skills, setSkills] = useState([""]);
+  const [academicProjects, setAcademicProjects] = useState([""]);
+  const [certifications, setCertifications] = useState([""]);
   const [interests, setInterests] = useState([""]);
 
   const navigate = useNavigate();
@@ -81,8 +84,38 @@ const InputForm = () => {
 
       company: "",
       yearsCompany: "",
+      jd: "",
     };
     setExperience([...experience, experienceForm]);
+  };
+
+  const addAcademicProjects = () => {
+    const newAcademicProjects = "";
+    setAcademicProjects([...academicProjects, newAcademicProjects]);
+  };
+  const handleAcademicProjectsChange = (index, value) => {
+    const updatedAcademicProjects = [...skills];
+    updatedAcademicProjects[index] = value;
+    setAcademicProjects(updatedAcademicProjects);
+    setFormData({ ...formData, academicProjects: updatedAcademicProjects });
+  };
+  const removeAcademicProjects = (index) => {
+    academicProjects.splice(index, 1);
+    setAcademicProjects([...academicProjects]);
+  };
+  const addCertifications = () => {
+    const newCertifications = "";
+    setCertifications([...certifications, newCertifications]);
+  };
+  const handleCertificationChange = (index, value) => {
+    const updatedCertifications = [...certifications];
+    updatedCertifications[index] = value;
+    setCertifications(updatedCertifications);
+    setFormData({ ...formData, certifications: updatedCertifications });
+  };
+  const removeCertifications = (index) => {
+    certifications.splice(index, 1);
+    setCertifications([...certifications]);
   };
 
   const addSkillHandler = () => {
@@ -271,24 +304,62 @@ const InputForm = () => {
   return (
     <>
       <Box>
-        <Typography
-          variant="h2"
-          textAlign="center"
-          fontWeight={"bold"}
-          mt={3}
-          sx={{
-            fontFamily: "Verdana",
-          }}
-        >
-          Resume Builder
-        </Typography>
+        <Stack justifyContent={"center"} alignItems="center">
+          <Typography
+            variant="h2"
+            textAlign="center"
+            mt={3}
+            sx={{
+              fontFamily: "Ubuntu",
+
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              color: "#F9629F",
+              fontWeight: "700",
+            }}
+          >
+            Resume
+          </Typography>
+          <Typography
+            variant="h2"
+            textAlign="center"
+            sx={{
+              fontFamily: "Ubuntu",
+
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              color: "#483c32",
+              fontWeight: "700",
+            }}
+          >
+            Builder
+          </Typography>
+          <Divider
+            sx={{
+              height: "3px",
+              width: "80%",
+              bgcolor: "#fc6c85",
+              borderColor: "pink",
+              borderRadius: "10em",
+              mt: "1em",
+            }}
+          />
+        </Stack>
         <Typography
           variant="h5"
           fontWeight="bold"
           textAlign="center"
           m={5}
           sx={{
-            fontFamily: "Palatino",
+            marginTop: "20px",
+            fontSize: "20px",
+            color: "#444",
+            wordSpacing: "1px",
+
+            letterSpacing: "2px",
+            textTransform: "uppercase",
+            fontFamily: "'Raleway', sans-serif",
+            fontWeight: "500",
           }}
         >
           Enter your details to generate a complete Resume
@@ -593,8 +664,8 @@ const InputForm = () => {
             {experience.map((values, index) => {
               return (
                 <>
-                  <Grid container key={index} spacing={3} ml={1} p={1.5}>
-                    <Grid item xs={12} sm={3}>
+                  <Grid container key={index} spacing={3} ml={0.5} p={1.5}>
+                    <Grid item xs={12} sm={4.5}>
                       <TextField
                         key={index + "role"}
                         name="Role"
@@ -609,7 +680,7 @@ const InputForm = () => {
                         }
                       ></TextField>
                     </Grid>
-                    <Grid item xs={12} sm={3}>
+                    <Grid item xs={12} sm={4.5}>
                       <TextField
                         key={index + "company"}
                         name="company"
@@ -644,6 +715,22 @@ const InputForm = () => {
                             "yearsCompany",
                             e.target.value
                           )
+                        }
+                      ></TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <TextField
+                        key={index + "jd"}
+                        name="jd"
+                        value={values.jd}
+                        variant="outlined"
+                        label="Job Description and Achievements"
+                        type="text"
+                        multiline
+                        fullWidth
+                        required
+                        onChange={(e) =>
+                          handleExperienceChange(index, "jd", e.target.value)
                         }
                       ></TextField>
                     </Grid>
@@ -721,6 +808,102 @@ const InputForm = () => {
                 <AddIcon />
               </Button>
             </Box>
+            <SectionDivider>Academic Projects</SectionDivider>
+
+            {academicProjects.map((items, index) => {
+              return (
+                <>
+                  <Stack spacing={3} m={2} ml={2} pl={2}>
+                    <Stack direction={"row"}>
+                      <TextField
+                        mt={2}
+                        key={index}
+                        name="Academic Projects"
+                        value={items}
+                        variant="outlined"
+                        label="Academic Projects"
+                        type="text"
+                        fullWidth
+                        required
+                        onChange={(e) =>
+                          handleAcademicProjectsChange(index, e.target.value)
+                        }
+                      ></TextField>
+                      {academicProjects.length > 1 && (
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            removeAcademicProjects(index);
+                          }}
+                        >
+                          <RemoveIcon />
+                        </Button>
+                      )}
+                    </Stack>
+                  </Stack>
+                </>
+              );
+            })}
+
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              m={5}
+            >
+              <Button variant="contained" onClick={addAcademicProjects}>
+                Add Academic Projects
+                <AddIcon />
+              </Button>
+            </Box>
+            <SectionDivider>Certifications</SectionDivider>
+
+            {certifications.map((items, index) => {
+              return (
+                <>
+                  <Stack spacing={3} m={2} ml={2} pl={2}>
+                    <Stack direction={"row"}>
+                      <TextField
+                        mt={2}
+                        key={index}
+                        name="Certifications"
+                        value={items}
+                        variant="outlined"
+                        label="Certifications"
+                        type="text"
+                        fullWidth
+                        required
+                        onChange={(e) =>
+                          handleCertificationChange(index, e.target.value)
+                        }
+                      ></TextField>
+                      {certifications.length > 1 && (
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            removeCertifications(index);
+                          }}
+                        >
+                          <RemoveIcon />
+                        </Button>
+                      )}
+                    </Stack>
+                  </Stack>
+                </>
+              );
+            })}
+
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              m={5}
+            >
+              <Button variant="contained" onClick={addCertifications}>
+                Add Certifications
+                <AddIcon />
+              </Button>
+            </Box>
             <SectionDivider>Interests</SectionDivider>
 
             {interests.map((items, index) => {
@@ -788,7 +971,6 @@ const InputForm = () => {
           >
             <Typography variant="h6" fontWeight="bold">
               Generate CV
-              <SendIcon />
             </Typography>
           </Button>
         </Box>

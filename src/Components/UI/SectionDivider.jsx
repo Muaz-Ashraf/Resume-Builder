@@ -8,7 +8,7 @@ const SectionDivider = (props) => {
       fontWeight="bold"
       width={"100%"}
       textAlign="center"
-      m={3}
+      mb={2}
       sx={{
         fontFamily: "Palatino",
 

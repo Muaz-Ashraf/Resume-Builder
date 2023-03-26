@@ -6,7 +6,7 @@ const CustomCard = (props) => {
     <Card
       variant="outlined"
       sx={{
-        padding: 7,
+        padding: 5,
         display: "flex",
         flexDirection: "column",
 

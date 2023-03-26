@@ -50,7 +50,7 @@ const Resume = () => {
             </Typography>
             <Typography
               variant="body1"
-              textAlign="left"
+              textAlign="justify"
               mt={3}
               fontFamily={"Ubuntu"}
             >
@@ -111,8 +111,8 @@ const Resume = () => {
             </Typography>
           </Stack>
         </Stack>
-        <Grid container>
-          <Grid item xs={6} sm={6} pl={10}>
+        <Grid container p={3}>
+          <Grid item xs={6} sm={6} pl={7}>
             <Stack mt={3} key={"1"}>
               <Typography
                 variant="h4"
@@ -190,6 +190,22 @@ const Resume = () => {
                     >
                       {item.yearsCompany} years
                     </Typography>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="#002D62"
+                      fontFamily={"Ubuntu"}
+                    >
+                      Tasks/Achievements
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      fontStyle="italic"
+                      key={index + 9}
+                      fontFamily={"Ubuntu"}
+                    >
+                      {item.jd}
+                    </Typography>
                   </>
                 );
               })}
@@ -236,7 +252,54 @@ const Resume = () => {
             <Typography
               variant="h4"
               fontWeight="bold"
-              mt={3}
+              mt={4}
+              color="#002D62"
+              fontFamily={"Ubuntu"}
+            >
+              ACADEMIC PROJECTS
+            </Typography>
+            <Stack mt={2} direction="column" flexWrap="wrap">
+              {formData.academicProjects.map((items, index) => {
+                return (
+                  <Typography
+                    fontFamily={"Ubuntu"}
+                    key={index + 2}
+                    variant="h6"
+                    textAlign="left"
+                  >
+                    {items}
+                  </Typography>
+                );
+              })}
+            </Stack>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              mt={5}
+              color="#002D62"
+              fontFamily={"Ubuntu"}
+            >
+              CERTIFICATIONS
+            </Typography>
+            <Stack mt={2} direction="column" flexWrap="wrap">
+              {formData.certifications.map((items, index) => {
+                return (
+                  <Typography
+                    mt={0.5}
+                    fontFamily={"Ubuntu"}
+                    key={index + 3}
+                    variant="h6"
+                    textAlign="left"
+                  >
+                    {items}
+                  </Typography>
+                );
+              })}
+            </Stack>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              mt={5}
               color="#002D62"
               fontFamily={"Ubuntu"}
             >
@@ -251,7 +314,7 @@ const Resume = () => {
                 return (
                   <Typography
                     fontFamily={"Ubuntu"}
-                    key={index + 2}
+                    key={index + 4}
                     variant="h6"
                     textAlign="center"
                     whiteSpace={"nowrap"}
