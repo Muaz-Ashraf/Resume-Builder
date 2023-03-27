@@ -94,7 +94,7 @@ const InputForm = () => {
     setAcademicProjects([...academicProjects, newAcademicProjects]);
   };
   const handleAcademicProjectsChange = (index, value) => {
-    const updatedAcademicProjects = [...skills];
+    const updatedAcademicProjects = [...academicProjects];
     updatedAcademicProjects[index] = value;
     setAcademicProjects(updatedAcademicProjects);
     setFormData({ ...formData, academicProjects: updatedAcademicProjects });
