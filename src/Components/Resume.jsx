@@ -17,19 +17,18 @@ const Resume = () => {
       <Box m={3}>
         <Stack
           direction={{ xs: "column", sm: "row" }}
-          divider={<Divider orientation="vertical" flexItem />}
           justifyContent="space-around"
           alignItems="center"
         >
           <img
             src={formData.image}
             style={{
-              height: "200px",
-              width: "200px",
               borderRadius: "50%",
+              maxHeight: "200px",
+              maxWidth: "200px",
 
               marginLeft: "5rem",
-              marginRight: "5rem",
+              marginRight: "2rem",
             }}
           />
 
@@ -52,6 +51,7 @@ const Resume = () => {
               variant="body1"
               textAlign="justify"
               mt={3}
+              mr={3}
               fontFamily={"Ubuntu"}
             >
               {formData.description}
@@ -112,7 +112,7 @@ const Resume = () => {
           </Stack>
         </Stack>
         <Grid container p={3}>
-          <Grid item xs={6} sm={6} pl={7}>
+          <Grid item xs={6} sm={6} pl={2}>
             <Stack mt={3} key={"1"}>
               <Typography
                 variant="h4"
@@ -199,10 +199,16 @@ const Resume = () => {
                       Tasks/Achievements
                     </Typography>
                     <Typography
+                      component={"li"}
                       variant="body1"
-                      fontStyle="italic"
                       key={index + 9}
                       fontFamily={"Ubuntu"}
+                      textAlign="justify"
+                      flexWrap="wrap"
+                      mr={10}
+                      sx={{
+                        listStyle: "disc",
+                      }}
                     >
                       {item.jd}
                     </Typography>
