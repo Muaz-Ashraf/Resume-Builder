@@ -1,4 +1,4 @@
-import { Card, Grid, Typography, Divider } from "@mui/material";
+import { Card, Grid, Typography, Divider, Avatar } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import React from "react";
 import { useLocation } from "react-router-dom";
@@ -20,16 +20,22 @@ const Resume = () => {
           justifyContent="space-around"
           alignItems="center"
         >
-          <img
+          <Avatar
             src={formData.image}
-            style={{
+            sx={{
               borderRadius: "50%",
-              maxHeight: "200px",
-              maxWidth: "200px",
-
+              height: "200px",
+              width: "200px",
               marginLeft: "5rem",
               marginRight: "2rem",
             }}
+            // style={{
+            //   borderRadius: "50%",
+            //   height:'100%',
+            //   width:'100%',
+            //   marginLeft: "5rem",
+            //   marginRight: "2rem",
+            // }}
           />
 
           <Stack>
